@@ -1,32 +1,30 @@
 // enum Color
-var Color;
-(function (Color) {
-    Color['Green'] = 'GREEN';
-    Color['Red'] = 'RED';
-    Color['Yellow'] = 'YELLOW';
-    Color['Blue'] = 'BLUE';
-})(Color || (Color = {}));
 
-// enum Action
+var ColorEnum = {
+    Green: 'GREEN',
+    Red: 'RED',
+    Yellow: 'YELLOW',
+    Blue: 'BLUE'
+};
 
-var Action;
-(function (Action) {
-    Action['Taki'] = 'TAKI';
-    Action['Stop'] = 'STOP';
-    Action['ChangeColor'] = 'CHANGE_COLOR';
-})(Action || (Action = {}));
+var ActionCardEnum = {
+    Taki: 'TAKI',
+    Stop: 'STOP',
+    ChangeColor: 'CHANGE_COLOR'
+};
 
-// enum CardNumber
+var CardNumberEnum = {
+    One: 1,
+    Two: 2,
+    Three: 3,
+    Four: 4,
+    Five: 5,
+    Six: 6,
+    Seven: 7,
+    Eight: 8,
+    Nine: 9
+};
 
-var CardNumber;
-(function (CardNumber) {
-    CardNumber[CardNumber['One'] = 1] = 'One';
-    CardNumber[CardNumber['Two'] = 2] = 'Two';
-    CardNumber[CardNumber['Three'] = 3] = 'Three';
-    CardNumber[CardNumber['Four'] = 4] = 'Four';
-    CardNumber[CardNumber['Five'] = 5] = 'Five';
-    CardNumber[CardNumber['Six'] = 6] = 'Six';
-    CardNumber[CardNumber['Seven'] = 7] = 'Seven';
-    CardNumber[CardNumber['Eight'] = 8] = 'Eight';
-    CardNumber[CardNumber['Nine'] = 9] = 'Nine';
-})(CardNumber || (CardNumber = {}));
+
+// card.color = Color.green;
+//if (card.color === color.yellow)

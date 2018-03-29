@@ -6,3 +6,9 @@
 + no need to use exceptions in exercise 1
 + input validation - not obligatory, only when you think it's needed
 + don't use global variables because it pollutes the global scope. use modules instead
+
+
+open questions:
++ how do we crete an enum
++ innerHTML vs DOM Manipulation
++ what is the difference:
