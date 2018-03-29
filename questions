@@ -1,5 +1,8 @@
-null vs undefined
-inheritance?
-no value for field (undefined or explicit Transparent)
-how many players?
-if a player wins does the game end?
++ null is preferable over undefined
++ inheritance is ok to use
++ enums are ok - use the es5 way
++ better not to scan the cards - use css or better svg
++ how many players? 2 in exercise 1
++ no need to use exceptions in exercise 1
++ input validation - not obligatory, only when you think it's needed
++ don't use global variables because it pollutes the global scope. use modules instead

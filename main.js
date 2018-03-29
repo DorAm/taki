@@ -1,4 +1,4 @@
-gameState = {
+var gGameState = {
     board: {
         deck: [],
         pile: [],
