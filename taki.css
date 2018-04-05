@@ -1,0 +1,86 @@
+
+h1 {
+    font-size: 50px;
+    text-transform: uppercase;
+    color: coral;
+/*    display: flex;
+      justify-content: center;
+*/}
+button {
+    padding: 10px;
+    font-size: 18px;
+    border-radius: 5%;
+}
+
+.menu{
+    display:flex;
+    justify-content: center;
+}
+
+.game-arena {
+    visibility: hidden;
+    border: 1px solid black;
+    height: 600px
+
+}
+
+.game-arena .bot {
+    height:100px;
+    border-bottom: 1px solid black;
+
+}
+
+.game-arena .table {
+    height:350px;
+    border-bottom: 1px solid black;
+
+
+}
+
+.game-arena .table div {
+    border: 1px solid;
+
+}
+
+.game-arena .table div {
+    border: 1px solid;
+    display: flex;
+    justify-content: center;
+    height: 95.7%;
+    border-bottom: none;
+}
+
+
+.pile {
+
+    /*TODO: make it work as 70%*/
+    background: red;
+    width:70%;
+    height:100%;
+}
+
+.deck {
+    background: green;
+    width: 30%;
+
+}
+
+.game-arena .player  {
+    height: 100px;
+    border: 1px solid black;
+}
+
+.game-arena .status  {
+    height: 50px;
+}
+
+.center {
+
+}
+
+h1, h2, h3 {
+    margin:0;
+    display:flex;
+    justify-content: center;
+    /*TODO: make it center*/
+}

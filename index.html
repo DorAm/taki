@@ -2,33 +2,58 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
-    <style>
-        h1 {
-            color: #634343;
-            font-size: 72px;
-        }
-
-        .hand {
-            border: 1px solid black;
-            height: 200px;
-        }
-
-        .card {
-            border: 1px solid black;
-            height: 100px;
-            width: 80px;
-            float: left;
-            margin-right: 10px;
-        }
-    </style>
+    <title>TAKI Game</title>
+    <link rel="stylesheet" type="text/css" href="taki.css"/>
 </head>
 <body>
-<h1>TAKI</h1>
-<div class="hand">
-    <div class="card"></div>
+<h1 id="header"> TAKI Game</h1>
+
+<div class="menu">
+    <button class="startGame" onclick=initGame()>
+        Start Game!
+    </button>
 </div>
 
+<div class="game-arena">
+
+    <div class="bot center">
+        <h2>BOT Player</h2>
+        <div>
+
+        </div>
+    </div>
+
+    <div class="table center">
+        <h2>TABLE</h2>
+        <div>
+            <div class="pile">
+                <h3>PILE</h3>
+            </div>
+
+            <div class="deck">
+                <h3>DECK</h3>
+            </div>
+        </div>
+    </div>
+
+    <div class="player center">
+        <h2>HUMAN PLAYER</h2>
+        <div>
+
+        </div>
+
+    </div>
+
+    <div class="status">
+        <h2>GAME STATUS and/or STATISTICS </h2>
+        <div class="status center">
+
+        </div>
+    </div>
+
+</div>
+
+<script src="enums.js"></script>
 <script src="main.js"></script>
 </body>
 </html>

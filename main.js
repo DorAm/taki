@@ -1,122 +1,108 @@
+var numOfPlayers = 2;
 var gGameState = {
     board: {
         deck: [],
         pile: [],
-        leadingCard: undefined,
+        leadingCard: null,
         direction: 'CLOCKWIZE'
     },
-    currentPlayer: undefined,
+    currentPlayer: null,
     players: [],
     statistics: {
         turns: 0,
-        gameTime: undefined,
-        averageTime: undefined,
+        gameTime: null,
+        averageTime: null
     }
 };
 
-// Main
+function initGame() {
+    var menu = document.querySelector('.menu');
+    menu.style.display = 'none';
+    var gameArena = document.querySelector('.game-arena');
+    gameArena.style.visibility = 'visible';
+    gGameState.board.deck = createDeck();
+    shuffleDeck(gGameState.board.deck);
+    gGameState.players = createPlayers();
 
-initGame();
+    dealHands();
+}
 
-// Color
-
-var green = 'GREEN';
-var red = 'RED';
-var yellow = 'YELLOW';
-var blue = 'BLUE';
-
-// Action
-
-var taki = 'TAKI';
-var stop = 'STOP';
-var changeColor = 'CHANGE_COLOR';
-
-// Card constructor
-
-function Card(color, number, action) {
-    this.color = color;
+// card constructor
+function CardConstructor(color, number, action) {
+    this.color  = color;
     this.number = number;
     this.action = action;
 }
 
-// Player constructor
-
-function Player(name, hand) {
+// player constructor
+function PlayerConstructor(name) {
     this.name = name;
-    this.hand = hand;
+    this.hand = [];
     this.singleCardCounter = 0;
 }
 
-function initGame() {
-    gameState.deck = createDeck();
-    renderDeck();
-    console.log(gameState.deck);
-}
-
-function setHand() {
+function dealHands() {
     for (var i = 1; i <= 8; i++) {
-        var card = gameState.deck.pop();
-        gameState.players[0].hand.push(card);
+        for (var j = 0; j < numOfPlayers; j++) {
+            var card = gGameState.board.deck.pop();
+            gGameState.players[j].hand.push(card);
+        }
     }
 }
 
-function shuffleDeck(a) {
+function shuffleDeck(deckOfCards) {
     var j, x, i;
-    for (i = a.length - 1; i > 0; i--) {
+    for (i = deckOfCards.length - 1; i > 0; i--) {
         j = Math.floor(Math.random() * (i + 1));
-        x = a[i];
-        a[i] = a[j];
-        a[j] = x;
+        x = deckOfCards[i];
+        deckOfCards[i] = deckOfCards[j];
+        deckOfCards[j] = x;
     }
+}
+
+function createPlayers() {
+    var players = [] ;
+    players.push(new PlayerConstructor("Amit"));
+    players.push(new PlayerConstructor("Computer"));
+    return players;
 }
 
 function createDeck() {
     var deck = [];
-    for (var i = 1; i <= 9; i++) {
-        if (i === 2) {
+    for (var number in CardNumberEnum) {
+        if (number === 2) {
             continue;
         }
         for (var j = 1; j <= 2; j++) {
-            deck.push(
-                new Card('GREEN', i),
-                new Card('RED', i),
-                new Card('YELLOW', i),
-                new Card('BLUE', i)
-            );
+            for (var color in ColorEnum) {
+                deck.push(new CardConstructor(ColorEnum[color], CardNumberEnum[number], null));
+            }
         }
     }
-    for (var j = 1; j <= 2; j++) {
-        deck.push(
-            new Card('GREEN', undefined, 'TAKI'),
-            new Card('RED', undefined, 'TAKI'),
-            new Card('YELLOW', undefined, 'TAKI'),
-            new Card('BLUE', undefined, 'TAKI'),
-            new Card('GREEN', undefined, 'STOP'),
-            new Card('RED', undefined, 'STOP'),
-            new Card('YELLOW', undefined, 'STOP'),
-            new Card('BLUE', undefined, 'STOP'),
-        )
+    for (var action in ActionCardEnum) {
+        if (action !== 'ChangeColor' ) {
+            for (j = 1; j <= 2; j++) {
+
+                for (color in ColorEnum) {
+                    deck.push(new CardConstructor(ColorEnum[color], null, ActionCardEnum[action]));
+                }
+            }
+        } else if (action === 'ChangeColor') {
+            for (j = 1; j <= 4; j++) {
+                deck.push(new CardConstructor(null, null, ActionCardEnum[action]));
+            }
+        }
     }
-    deck.push(
-        new Card('GREEN', undefined, 'CHANGE_COLOR'),
-        new Card('RED', undefined, 'CHANGE_COLOR'),
-        new Card('YELLOW', undefined, 'CHANGE_COLOR'),
-        new Card('BLUE', undefined, 'CHANGE_COLOR')
-    );
     shuffleDeck(deck);
     return deck;
 }
-
-function createPlayers() {
-
-}
-
+/*
 function renderDeck() {
     var htmlStr = '';
-    gameState.deck.forEach(function (card) {
+    = gGameState.board.deck.forEach(function (card) {
         htmlStr += '<div class="card">' + card.color + '</div>'
     });
     document.querySelector('.hand').innerHTML = htmlStr;
 }
 
-
+*/
