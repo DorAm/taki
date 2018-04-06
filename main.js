@@ -25,6 +25,12 @@ function initGame() {
     gGameState.players = createPlayers();
 
     dealHands();
+    // dealing the pile the first card of the game
+    gGameState.board.pile.push(gGameState.board.deck.pop());
+    //deciding which player starts the game
+//    pickFirstPlayer();
+
+    startGame();
 }
 
 // card constructor
@@ -42,6 +48,7 @@ function PlayerConstructor(name) {
 }
 
 function dealHands() {
+    //dealing 8 cards to each player
     for (var i = 1; i <= 8; i++) {
         for (var j = 0; j < numOfPlayers; j++) {
             var card = gGameState.board.deck.pop();
@@ -50,6 +57,9 @@ function dealHands() {
     }
 }
 
+function startGame() {
+
+}
 function shuffleDeck(deckOfCards) {
     var j, x, i;
     for (i = deckOfCards.length - 1; i > 0; i--) {
