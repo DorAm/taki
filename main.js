@@ -5,6 +5,7 @@ var gGameState = {
         leadingCard: null,
         direction: 'CLOCKWIZE'
     },
+    player: [],
     currentPlayer: null,
     players: [],
     statistics: {
