@@ -3,65 +3,67 @@ h1 {
     font-size: 50px;
     text-transform: uppercase;
     color: coral;
-/*    display: flex;
-      justify-content: center;
-*/}
+    /*    display: flex;
+          justify-content: center;
+    */
+}
+
 button {
     padding: 10px;
     font-size: 18px;
     border-radius: 5%;
 }
 
-.menu{
-    display:flex;
+.main-menu {
+    display: flex;
     justify-content: center;
 }
 
 .game-arena {
-    visibility: hidden;
+    display: none;
     border: 1px solid black;
     height: 800px
 
 }
 
 .game-arena .bot {
-    height:25%;
+    height: 25%;
     border: 1px solid black;
 
 }
 
 .game-arena .table {
-    height:40%;
+    height: 40%;
 }
 
 .game-arena .table div {
     /*TODO: check why the height here is problematic*/
-/*    border: 1px solid;*/
+    /*    border: 1px solid;*/
     display: flex;
     justify-content: center;
     height: 100%;
 }
 
 .pile {
-        /*TODO: make it work as 70%*/
+    /*TODO: make it work as 70%*/
     background: red;
-    width:70%;
-/*    height:100%;*/
-    border:none;
+    width: 70%;
+    /*    height:100%;*/
+    border: none;
 }
 
 .deck {
     background: green;
     width: 30%;
-    border:none;
+    border: none;
 }
 
-.game-arena .player  {
+.game-arena .player {
     height: 25%;
     border: 1px solid black;
 }
 
-.game-arena .status  {
+.game-arena .status {
     height: 10%;
 }
 
@@ -70,26 +72,27 @@ button {
 }
 
 h1, h2, h3 {
-    margin:0;
-    display:flex;
+    margin: 0;
+    display: flex;
     justify-content: center;
     /*TODO: make it center*/
 }
+
 .cardsArea {
     display: flex;
     justify-content: flex-start;
     height: 80%;
 }
+
 /*.card {
     border: 1px solid black;
     width: 70px;
     height: 80%;
 }
 */
-span{
-/*    display: inline-block;*/
+span {
+    /*    display: inline-block;*/
 }
-
 
 .cardOutline {
     width: 70px;
@@ -103,13 +106,37 @@ span{
     color: #cc0033;
     border: 1px solid black;
 }
+
 .cardOutline div {
     display: inline-block;
 }
-.topLeft,.bottomLeft {
-    text-align: left;
+
+/*.cardOutline {*/
+/*.top, .bottom {*/
+/*display: flex;*/
+/*justify-content: space-between;*/
+/*}*/
+/*.main {*/
+/*display: flex;*/
+/*justify-content: center;*/
+/*}*/
+/*}*/
+
+.cardOutline {
+    display: flex;
+    flex-direction: column;
 }
 
-.topRight,.bottomRight{
-    text-align: right;
+.cardOutline .cardTop, .cardOutline .cardBottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex: 1;
+}
+
+.cardOutline .cardCenter {
+    display: flex;
+    justify-content: center;
+    flex: 5;
+    align-items: center;
 }

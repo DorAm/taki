@@ -3,15 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <title>TAKI Game</title>
-    <link rel="stylesheet" type="text/css" href="taki.css"/>
+    <link rel="stylesheet" type="text/css" href="taki.css" />
 </head>
 <body onload=initGame()>        <!-- TODO: delete Onload and retrieve startGame button -->
 <h1 id="header"> TAKI Game</h1>
 
-<div class="menu">
-<!--<button class="startGame" onclick=initGame()>
-        Start Game!
-    </button>   -->
+<div class="main-menu">
+    <!--<button class="startGame" onclick=initGame()>
+            Start Game!
+        </button>   -->
 </div>
 
 <div class="game-arena">
@@ -24,7 +24,7 @@
     </div>
 
     <div class="table center">
- <!--       <h2>TABLE</h2>      -->
+        <!--       <h2>TABLE</h2>      -->
         <div>
             <div class="pile">
                 <h3>PILE</h3>
@@ -39,13 +39,7 @@
     <div class="player center">
         <h2>HUMAN PLAYER</h2>
         <div class="cardsArea">
-            <div class="cardOutline">
-                    <div class="topLeft"><span>2+</span></div>
-                    <div class="topRight"><span>A</span><span>&hearts;</span></div>
-                    <h1>&hearts;</h1>
-                    <div class="bottomLeft"><span>&hearts;</span><span>A</span></div>
-                    <div class="bottomRight"><span>2</span><span>+</span></div>
-            </div>
+
         </div>
 
     </div>
@@ -58,8 +52,22 @@
     </div>
 
 </div>
-
+<script src="utils.js"></script>
 <script src="enums.js"></script>
 <script src="main.js"></script>
 </body>
 </html>
+
+<!--<div class="cardOutline">-->
+    <!--<div class="top">-->
+        <!--<div>"TAKI"</div>-->
+        <!--<div>"TAKI"</div>-->
+    <!--</div>-->
+    <!--<div class="main">-->
+        <!--<div>TAKI</div>-->
+    <!--</div>-->
+    <!--<div class="bottom">-->
+        <!--<div>TAKI</div>-->
+        <!--<div>TAKI</div>-->
+    <!--</div>-->
+<!--</div>-->
