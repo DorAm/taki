@@ -28,10 +28,14 @@ function initGame() {
     // dealing the pile the first card of the game
     gGameState.board.pile.push(gGameState.board.deck.pop());
     //deciding which player starts the game
-//    pickFirstPlayer();
-
+    pickFirstPlayer();
+    pickNextPlayer();
     startGame();
 }
+
+//each turn we need to check : if ( isDeckEmpty() ) restockDeck();
+
+
 
 // card constructor
 function CardConstructor(color, number, action) {
@@ -105,6 +109,55 @@ function createDeck() {
     }
     shuffleDeck(deck);
     return deck;
+}
+
+function pickFirstPlayer()  {
+//     TODO : sophisticate the process
+    gGameState.currentPlayer(gGameState.players[0]);
+}
+
+function pickNextPlayer()  {
+    var index = gGameState.players.indexOf(gGameState.currentPlayer );
+
+    if (  gGameState.board.direction === 'CLOCKWIZE' ) {
+
+        // when current player is last in array and board direction is clockWize
+        if (index === (gGameState.players.length - 1)) {
+            gGameState.currentPlayer = gGameState.players[0];
+        } else {
+            gGameState.currentPlayer = gGameState.players[index + 1];
+        }
+    } else if (gGameState.board.direction === 'COUNTERCLOCK' ) {
+
+        // when current player is first in array and board direction is counter Clock
+        if ( (index) ===  0 ) {
+            gGameState.currentPlayer = gGameState.players[gGameState.players.length - 1];
+        } else {
+            gGameState.currentPlayer = gGameState.players[index - 1];
+        }
+    }
+}
+// BOT rules of playing
+function botMind() {
+
+    var lCard = gGameState.board.leadingCard;
+
+    if ( (lCard.color number === 2) && ( player.hand.find(card.number))
+
+}
+
+
+function isDeckEmpty(deckOfCards) {
+    if ( deckOfCards.length() === 0 ) )
+        return true;
+    else
+        return false;
+}
+function restockDeck() {
+    while ( gGameState.board.pile.length > 1 ) {
+        gGameState.board.deck.unshift(gGameState.board.pile.shift());
+    }
+    shuffleDeck(gGameState.board.deck);
 }
 /*
 function renderDeck() {
