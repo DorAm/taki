@@ -202,6 +202,7 @@ function createCard(card) {
     var icon = document.createElement('div');
 
     icon.appendChild(text);
+    //sssss
     cardCenter.appendChild(icon);
 
     for (var i = 1; i <= 2; i++) {
