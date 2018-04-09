@@ -57,7 +57,9 @@ button {
     width: 30%;
     border: none;
 }
-
+.game-arena {
+    background: #339900;
+}
 .game-arena .player {
     height: 25%;
     border: 1px solid black;
@@ -78,53 +80,33 @@ h1, h2, h3 {
     /*TODO: make it center*/
 }
 
-.cardsArea {
+.botCardsArea {
     display: flex;
-    justify-content: flex-start;
+    justify-content: center;
     height: 80%;
+/*    background: #339900;*/
 }
 
-/*.card {
-    border: 1px solid black;
-    width: 70px;
+.playerCardsArea {
+    display: flex;
+    justify-content: center;
     height: 80%;
+/*    background: #339900;*/
 }
-*/
-span {
-    /*    display: inline-block;*/
-}
-
-.cardOutline {
-    width: 70px;
-    height: 80%;
-    display: block;
-    width: 110px;
-    text-align: center;
-    padding: 5px;
-    margin: 5px;
-    background: #FFF;
-    color: #cc0033;
-    border: 1px solid black;
-}
-
-.cardOutline div {
-    display: inline-block;
-}
-
-/*.cardOutline {*/
-/*.top, .bottom {*/
-/*display: flex;*/
-/*justify-content: space-between;*/
-/*}*/
-/*.main {*/
-/*display: flex;*/
-/*justify-content: center;*/
-/*}*/
-/*}*/
 
 .cardOutline {
     display: flex;
     flex-direction: column;
+    width: 80px;
+    min-width: 55px;
+    height: 80%;
+    text-align: center;
+    padding:10px;
+    margin: 7px;
+    background: #FFF;
+    color: #cc0033;
+    text-shadow: 0px 0px 2px black;
+    /*border: 1px solid black;*/
 }
 
 .cardOutline .cardTop, .cardOutline .cardBottom {
@@ -132,6 +114,8 @@ span {
     justify-content: space-between;
     align-items: center;
     flex: 1;
+    font-size: small;
+    font-family: fantasy;
 }
 
 .cardOutline .cardCenter {
@@ -139,4 +123,14 @@ span {
     justify-content: center;
     flex: 5;
     align-items: center;
+    font-size: xx-large;    /*-webkit-xxx-large;           /*TODO: ask about webkit */
+    font-family: fantasy;
+
+}
+
+.shadow {
+    box-shadow: 1px 1px 3px #000; -moz-box-shadow: 1px 1px 3px #000; -webkit-box-shadow: 1px 1px 3px #000;
+}
+.rounded    {
+    border-radius:10px; -moz-border-radius:10px; -webkit-border-radius:10px;
 }

@@ -5,7 +5,7 @@ var gGameState = {
         leadingCard: null,
         direction: 'CLOCKWIZE'
     },
-    player: [],
+//    player: [],
     currentPlayer: null,
     players: [],
     statistics: {
@@ -23,14 +23,12 @@ function initGame() {
     // Deck
     gGameState.board.deck = createDeck();
     shuffleDeck(gGameState.board.deck);
-    gGameState.board.deck.forEach(function (card) {
-        createCard(card);
-    });
 
     // Players:
     createPlayers();
 
     startGame();
+
 }
 
 
@@ -46,10 +44,11 @@ function initGame() {
 
 
 // card constructor
-function Card(color, number, action) {
+function Card(color, number, action, name) {
     this.color = color;
     this.number = number;
     this.action = action;
+    this.name = name;
 }
 
 // player constructor
@@ -74,6 +73,8 @@ function startGame() {
     gGameState.board.pile.push(gGameState.board.deck.pop());
     //deciding which player starts the game
     pickFirstPlayer();
+
+    showCards();
 }
 
 function shuffleDeck(deckOfCards) {
@@ -105,21 +106,23 @@ function createDeck() {
         }
         for (var j = 1; j <= 2; j++) {
             for (var color in ColorEnum) {
-                deck.push(new Card(ColorEnum[color], CardNumberEnum[number], null));
+                deck.push(new Card(ColorEnum[color], CardNumberEnum[number], null,CardNameEnum[number]));
             }
         }
     }
-    for (var action in ActionCardEnum) {
-        if (action !== ActionCardEnum.ChangeColor) {
+    for (var action in CardActionEnum) {
+        // if (action !== CardActionEnum.ChangeColor) {         TODO: find a way to use ENUM here
+        if (action !== 'ChangeColor') {
             for (j = 1; j <= 2; j++) {
 
                 for (color in ColorEnum) {
-                    deck.push(new Card(ColorEnum[color], null, ActionCardEnum[action]));
+                    deck.push(new Card(ColorEnum[color], null, CardActionEnum[action], CardNameEnum[action]));
                 }
             }
-        } else if (action === ActionCardEnum.ChangeColor) {
+/*        } else if (action === CardActionEnum.ChangeColor) {*/
+        } else if (action === 'ChangeColor') {
             for (j = 1; j <= 4; j++) {
-                deck.push(new Card(null, null, ActionCardEnum[action]));
+                deck.push(new Card(null, null, CardActionEnum[action], CardNameEnum[action]));
             }
         }
     }
@@ -175,9 +178,9 @@ function renderDeck() {
 }
 */
 
-function createCard(card) {
+function createPlayerCard(card) {
     var cardOutline = document.createElement('div');
-    cardOutline.classList.add('cardOutline');
+    cardOutline.classList.add('cardOutline', 'shadow', 'rounded');
     var cardTop = document.createElement('div');
     cardTop.classList.add('cardTop');
     var cardCenter = document.createElement('div');
@@ -191,32 +194,92 @@ function createCard(card) {
 
     for (var i = 1; i <= 2; i++) {
         var icon = document.createElement('div');
-        var text = document.createTextNode(card.number);
-        icon.style.color = card.color;
+        var text = document.createTextNode(card.name);
+        /*       icon.style.color = card.color;*/
+        card.color ? icon.style.color = card.color : icon.style.color = 'BLACK';
         icon.appendChild(text);
         cardTop.appendChild(icon);
     }
 
     var icon = document.createElement('div');
-    var text = document.createTextNode(card.number);
+    var text = document.createTextNode(card.name);
     var icon = document.createElement('div');
-
+    /*        icon.style.color = card.color;*/
+    card.color ? icon.style.color = card.color : icon.style.color = 'BLACK';
     icon.appendChild(text);
-    //sssss
+
     cardCenter.appendChild(icon);
 
     for (var i = 1; i <= 2; i++) {
         icon.style.color = card.color;
         var icon = document.createElement('div');
-        var text = document.createTextNode(card.number);
+        var text = document.createTextNode(card.name);
+        /*        icon.style.color = card.color;*/
+        card.color ? icon.style.color = card.color : icon.style.color = 'BLACK';
         icon.appendChild(text);
         cardBottom.appendChild(icon);
     }
 
-    var cardsArea = document.querySelector('.cardsArea');
-    cardsArea.appendChild(cardOutline);
+    var playerCardsArea = document.querySelector('.playerCardsArea');
+    playerCardsArea.appendChild(cardOutline);
 }
 
-// function cardDisplay(card) {
-//     return card.number ? card.number : card.action;
-// }
+function createBotCard(card) {
+    var cardOutline = document.createElement('div');
+    cardOutline.classList.add('cardOutline', 'shadow', 'rounded');
+    var cardTop = document.createElement('div');
+    cardTop.classList.add('cardTop');
+    var cardCenter = document.createElement('div');
+    cardCenter.classList.add('cardCenter');
+    var cardBottom = document.createElement('div');
+    cardBottom.classList.add('cardBottom');
+    cardOutline.appendChild(cardTop);
+    cardOutline.appendChild(cardCenter);
+    cardOutline.appendChild(cardBottom);
+
+
+    for (var i = 1; i <= 2; i++) {
+        var icon = document.createElement('div');
+        var text = document.createTextNode(card.name);
+        /*       icon.style.color = card.color;*/
+        card.color ? icon.style.color = card.color : icon.style.color = 'BLACK';
+        icon.appendChild(text);
+        cardTop.appendChild(icon);
+    }
+
+    var icon = document.createElement('div');
+    var text = document.createTextNode(card.name);
+    var icon = document.createElement('div');
+    /*        icon.style.color = card.color;*/
+    card.color ? icon.style.color = card.color : icon.style.color = 'BLACK';
+    icon.appendChild(text);
+
+    cardCenter.appendChild(icon);
+
+    for (var i = 1; i <= 2; i++) {
+        icon.style.color = card.color;
+        var icon = document.createElement('div');
+        var text = document.createTextNode(card.name);
+        /*        icon.style.color = card.color;*/
+        card.color ? icon.style.color = card.color : icon.style.color = 'BLACK';
+        icon.appendChild(text);
+        cardBottom.appendChild(icon);
+    }
+
+    var botCardsArea = document.querySelector('.botCardsArea');
+    botCardsArea.appendChild(cardOutline);
+}
+
+
+function showCards() {
+
+    //display human player cards on screen
+    gGameState.players[0].hand.forEach(function (card) {
+        createPlayerCard(card);
+    });
+
+    //display Bot player cards on screen
+    gGameState.players[1].hand.forEach(function (card) {
+        createBotCard(card);
+    });
+}

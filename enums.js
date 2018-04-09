@@ -7,10 +7,10 @@ var ColorEnum = {
 };
 
 // enum ActionCard
-var ActionCardEnum = {
+var CardActionEnum = {
     Taki:        'TAKI',
     Stop:        'STOP',
-    ChangeColor: 'CHANGE_COLOR'
+    ChangeColor: 'CC'
 };
 
 // enum Card numbers
@@ -24,4 +24,20 @@ var CardNumberEnum = {
     Seven: 7,
     Eight: 8,
     Nine:  9
+};
+
+// enum Card names
+var CardNameEnum = {
+    One:   1,
+//  TwoPlus:   2,
+    Three: 3,
+    Four:  4,
+    Five:  5,
+    Six:   6,
+    Seven: 7,
+    Eight: 8,
+    Nine:  9,
+    Taki:        'TAKI',
+    Stop:        'STOP',
+    ChangeColor: 'CC'
 };
