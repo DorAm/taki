@@ -5,57 +5,16 @@
     <title>TAKI Game</title>
     <link rel="stylesheet" type="text/css" href="taki.css" />
 </head>
-<body onload=initGame()>        <!-- TODO: delete Onload and retrieve startGame button -->
+<body onload=initGame()>        <!-- TODO: delete "onload=initGame()" -->
 <h1 id="header"> TAKI Game</h1>
 
 <div class="main-menu">
-    <!--<button class="startGame" onclick=initGame()>
+    <button class="startGame" onclick=initGame()>
             Start Game!
-        </button>   -->
+        </button>
 </div>
 
 <div class="game-arena">
-
-    <div class="bot center">
-        <h2>BOT Player</h2>
-        <div class="botCardsArea">
-
-        </div>
-    </div>
-
-    <div class="table center">
-        <!--       <h2>TABLE</h2>      -->
-        <div>
-            <div class="pile">
-                <h3>PILE</h3>
-            </div>
-
-            <div class="deck">
-                <h3>DECK</h3>
-            </div>
-        </div>
-    </div>
-
-    <div class="player center">
-        <h2>HUMAN PLAYER</h2>
-        <div class="playerCardsArea">
-            <!--<div class="cardOutline shadow rounded">-->
-            <!--<div class="cardTop">-->
-            <!--<div>TAKI</div>-->
-            <!--<div>TAKI</div>-->
-            <!--</div>-->
-            <!--<div class="cardCenter">-->
-            <!--<div>TAKI</div>-->
-            <!--</div>-->
-            <!--<div class="cardBottom">-->
-            <!--<div>TAKI</div>-->
-            <!--<div>TAKI</div>-->
-            <!--</div>-->
-            <!--</div>-->
-
-        </div>
-
-    </div>
 
     <div class="status">
         <h2>GAME STATUS and/or STATISTICS </h2>
@@ -63,6 +22,49 @@
 
         </div>
     </div>
+
+    <div class="bot center">
+        <h2>BOT Player</h2>
+        <div class="botCardsArea">
+        </div>
+    </div>
+
+    <div class="table center">
+        <div class="pileArea">
+            <h2>PILE</h2>
+            <div></div>
+            <div class="pileCardsArea"></div>
+        </div>
+
+        <div class="deckArea">
+            <h2>DECK</h2>
+            <div class="deckCardsArea">
+            </div>
+        </div>
+    </div>
+
+    <div class="player center">
+        <h2>HUMAN PLAYER</h2>
+        <div class="playerCardsArea">
+
+        </div>
+
+    </div>
+
+
+    <!--<div class="cardOutline shadow rounded">-->
+    <!--<div class="cardTop">-->
+    <!--<div>TAKI</div>-->
+    <!--<div>TAKI</div>-->
+    <!--</div>-->
+    <!--<div class="cardCenter">-->
+    <!--<div>TAKI</div>-->
+    <!--</div>-->
+    <!--<div class="cardBottom">-->
+    <!--<div>TAKI</div>-->
+    <!--<div>TAKI</div>-->
+    <!--</div>-->
+    <!--</div>-->
 
 </div>
 <script src="utils.js"></script>
