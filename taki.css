@@ -1,4 +1,3 @@
-
 h1 {
     font-size: 50px;
     text-transform: uppercase;
@@ -8,6 +7,16 @@ h1 {
     */
 }
 
+h1, h2, h3 {
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    /*TODO: make it center*/
+}
+
+body {
+    user-select: none;
+}
 /*
 button {
     padding: 10px;
@@ -22,147 +31,104 @@ button {
 }
 
 .game-arena {
+
     display: none;
     border: 1px solid black;
-    height: 800px
-
-}
-
-.game-arena .bot {
-    height: 25%;
-    border: 1px solid black;
-
-}
-
-.game-arena .table {
-    /*TODO: check why the height here is problematic*/
-    /*    border: 1px solid;*/
-    display: flex;
-    justify-content: center;
-    height: 40%;
-}
-
-.pileArea {
-    /*TODO: make it work as 70%*/
-    background: red;
-    width: 70%;
-    /*    height:100%;*/
-    border: none;
-    flex-direction: column;
-}
-
-.deckArea {
-    background: green;
-    width: 30%;
-    border: none;
-}
-.game-arena {
+    height: 800px;
     background: #339900;
-}
-.game-arena .player {
-    height: 25%;
-    border: 1px solid black;
 }
 
 .game-arena .status {
     height: 10%;
 }
 
-.center {
+.game-arena .bot {
+    height: 35%;
+    border: 1px solid black;
 
 }
 
-h1, h2, h3 {
-    margin: 0;
-    display: flex;
-    justify-content: center;
-    /*TODO: make it center*/
-}
-
-.botCardsArea {
-    display: flex;
-    justify-content: center;
-    height: 80%;
-/*    background: #339900;*/
-}
-
-.playerCardsArea, .pileCardsArea, .deckCardsArea {
+.botCardsArea, .playerCardsArea  {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 80%;
-/*    background: #339900;*/
+    height: 90%;
+    flex-wrap: wrap;
 }
 
-.cardOutline {
+.game-arena .table {
     display: flex;
+    justify-content: center;
+    height: 20%;
+}
+
+.pileArea {
+    background: red;
+    width: 50%;
+    border: none;
     flex-direction: column;
-    width: 80px;
-    min-width: 55px;
-    height: 80%;
-    text-align: center;
-    padding:10px;
-    margin: 8px;
-/*    margin-left: -80px;*/
-    background: #FFF;
-/*    color: #cc0033;*/
-    text-shadow: 0px 0px 2px black;
-    /*border: 1px solid black;*/
 }
 
-.pileCardsArea .cardOutline,
-.deckCardsArea .cardOutline {
-    height: 50%;
-    margin-left: -109px;
-}
-
-/*
 .deckArea {
-    display: flex;
-    flex-direction: column;
+    background: green;
+    width: 50%;
+    border: none;
 }
-.deckArea .deckCardsArea {
+.game-arena .player {
+    height: 35%;
+    border: 1px solid black;
+}
+
+.pileCardsArea ,
+.deckCardsArea {
     display: flex;
     justify-content: center;
     align-items: center;
+    height: 80%;
 
 }
-*/
+
+.pileCardsArea {
+
+}
+
+.deckCardsArea {
+    position: relative;
+
+}
 
 /*
-.deckArea .deckCardsArea .cardOutline {
-    display: flex;
-    width: 100%;
-!*    align-items: center;*!
-    margin-left: -107px;
-    height: 50%;
-}*/
+    .cardContainer .cardOutline {
+        display: flex;
+        flex-direction: column;
+        width: 80px;
+        min-width: 55px;
+        height: 80%;
+        text-align: center;
+        padding:10px;
+        margin: 8px;
+    !*    margin-left: -80px;*!
+        background: #FFF;
+    !*    color: #cc0033;*!
+        text-shadow: 0px 0px 2px black;
+        !*border: 1px solid black;*!
 
-.cardOutline .cardTop, .cardOutline .cardBottom {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex: 1;
-    font-size: small;
-    font-family: fantasy;
+
+    }
+  */
+
+.playerCardsArea .cardContainer ,
+.deckCardsArea .cardContainer {
+    cursor: pointer;
 }
 
-.playerCardsArea .cardOutline .cardCenter,
-.botCardsArea .cardOutline .cardCenter,
-.pileCardsArea .cardOutline .cardCenter,
-.deckCardsArea .cardOutline .cardCenter {
-    display: flex;
-    justify-content: center;
-    flex: 5;
-    align-items: center;
-    font-size: xx-large;    /*-webkit-xxx-large;           /*TODO: ask about webkit */
-    font-family: fantasy;
-
+.botCardsArea .cardContainer ,
+.playerCardsArea .cardContainer {
+    margin-left: 10px;
 }
 
-.shadow {
-    box-shadow: 1px 1px 3px #000; -moz-box-shadow: 1px 1px 3px #000; -webkit-box-shadow: 1px 1px 3px #000;
-}
-.rounded    {
-    border-radius:10px; -moz-border-radius:10px; -webkit-border-radius:10px;
+.pileCardsArea .cardContainer,
+.deckCardsArea .cardContainer {
+    position: relative;
+    margin-left: -83px;
 }

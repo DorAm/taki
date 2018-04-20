@@ -1,0 +1,101 @@
+
+.cardContainer {
+    height: 115px;
+    width: 85px;
+}
+.card {
+    height: 100%;
+    /*transform-style: preserve-3d;*/
+    transition: all 1s ease-in-out;
+}
+.card:hover{
+    transform:rotateY(180deg);
+}
+.frontCard {
+    height: 100%;
+    background: white;
+    display: flex;
+    flex-direction: column;
+    padding-left: 5%;
+    padding-right: 5%;
+    text-shadow: 1px -1px 2px black;
+    position:relative;
+
+    backface-visibility: hidden;
+    overflow: hidden;
+}
+
+.cardTop,
+.cardBottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex: 1;
+    font-size: small;
+    font-family: fantasy;
+    padding-top: 10%;
+    padding-bottom: 10%;
+}
+
+.cardCenter {
+    display: flex;
+    justify-content: center;
+    flex: 5;
+    align-items: center;
+    font-size: xx-large;    /*-webkit-xxx-large;           /*TODO: ask about webkit */
+    font-family: fantasy;
+}
+
+.backCard {
+    /*visibility: hidden;*/
+    height: 100%;
+    background: white;
+    position:relative;
+    top: -100%;
+    transform: rotateY(180deg);
+}
+.cardCover {
+    height:100%;
+}
+.cardCover img {
+    display: block;
+    width: 85%;
+    margin-left:  auto;
+    margin-right: auto;
+    position: relative;
+    top:    4.5%;
+}
+
+.shadow {
+    box-shadow: 1px 1px 3px #000; -moz-box-shadow: 1px 1px 3px #000; -webkit-box-shadow: 1px 1px 3px #000;
+}
+
+.rounded {
+    border-radius:10px; -moz-border-radius:10px; -webkit-border-radius:10px;
+}
+
+/*
+
+<!--
+<div class="cardContainer">
+                          <div class="card shadow rounded">
+                                                          <div class="frontCard shadow rounded">
+                                                                                               <div class="cardTop">
+                                                                                                                   <div>TAKI</div>
+                                                                                                                              <div>TAKI</div>
+                                                                                                                                         </div>
+                                                                                                                                           <div class="cardCenter">TAKI</div>
+                                                                                                                                                                         <div class="cardBottom">
+                                                                                                                                                                                                <div>TAKI</div>
+                                                                                                                                                                                                           <div>TAKI</div>
+                                                                                                                                                                                                                      </div>
+                                                                                                                                                                                                                        </div>
+                                                                                                                                                                                                                          <div class="backCard shadow rounded">
+                                                                                                                                                                                                                                                              <div class="cardCover   ">
+                                                                                                                                                                                                                                                                                       <img src="taki.jpg" alt="taki cover">
+                                                                                                                                                                                                                                                                                                                           </div>
+                                                                                                                                                                                                                                                                                                                             </div>
+                                                                                                                                                                                                                                                                                                                               </div>
+                                                                                                                                                                                                                                                                                                                                 </div>
+-->
+ */

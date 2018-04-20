@@ -12,3 +12,5 @@ open questions:
 + how do we crete an enum
 + innerHTML vs DOM Manipulation
 + what is the difference:
+
+האם כל משיכת/הנחת קלף נחשבת תור ? למשל אם אני מושך 2+ מהקופה בעצם עוברים 2 תורות או תור אחד? על אותו מישור אם אני מניח טאקי ואחריו 3 קלפים זה 4 תורות או תור אחד?
