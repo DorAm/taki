@@ -95,6 +95,8 @@ function startGame() {
 }
 
 function shuffleDeck(withHtmlElements) {
+    // if the parameter withHtmlElements is false the function only shuffle the deck cards in the global board deck
+    // if its true than also the html elements on screen are being shuffled
     var j, x, i, xElement;
     var deckOfCards = gGameState.board.deck;
     var deckCardsElement = document.querySelector('.deckCardsArea')
