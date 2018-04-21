@@ -47,6 +47,15 @@ button {
 .game-arena .status {
     height: 10%;
 }
+.game-arena .statusArea {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 60%;
+    font-size: 20px;
+    text-transform: uppercase;
+
+}
 
 .game-arena .bot {
     height: 35%;

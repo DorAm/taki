@@ -10,6 +10,11 @@ var gGameState = {
         owedCards2Take: 0       // number of cards the player is obligated to take from deck.every turn it sets on 1 unless 2+ are involved :-)
     },
     currentPlayer: null,
+    currentTurnTime: null,
+    isTurnEnded   : false,
+    isGameAborted : false,
+
+
     // currentNumber: null,
     // currentAction: null,
 
@@ -29,15 +34,12 @@ var gGameState = {
 
 function initGame() {
 
+
     toggleDisplay("main-menu");
     toggleDisplay("game-arena");    // todo: ask why i need here to run the command twice for it to work
     toggleDisplay("game-arena");
 
-    // Deck
-    gGameState.board.deck = createDeck();
-    shuffleDeck(false);
-
-    // Players:
+    // Players:             // TODO: in near future we would register our player info here.
     createPlayers();
 
     startGame();
@@ -51,7 +53,9 @@ function toggleDisplay(selector) {
 // TODO: each turn we need to check : if ( isDeckEmpty() ) restockDeck();
 
 // card constructor
-function Card(color, number, action, name) {
+function Card( id, color, number, action, name) {
+    this.gameOwner = 1;
+    this.id = id;
     this.color = color;
     this.number = number;
     this.action = action;
@@ -73,27 +77,84 @@ function Player(name) {
 function dealHands() {
     for (var i = 1; i <= 8; i++) {
         gGameState.players.forEach(function (player) {
-            var card = gGameState.board.deck.pop();
-            player === gGameState.players[0] ? card.isHidden=false : card.isHidden=true ;
-            player.hand.push(card);
+            moveCard('deck',player.name);
         });
     }
 }
 
 function startGame() {
-    dealHands();
-    // dealing the pile the first card of the game
-    var card = gGameState.board.deck.pop();
-    card.isHidden=false;
-    gGameState.board.pile.push(card);
-    // updating the board leading card
-    gGameState.board.leadingCard = card;
+
+    var gameOver=true;
+    var gameAborted=false;
+
+    // creating Deck of cards for the game
+    gGameState.board.deck = createDeck();
+    //shuffeling our newly born deck of cards. the false is means to shuffle a deck that is not visible on screen yet.
+    shuffleDeck(false);
+
     //deciding which player starts the game
     pickFirstPlayer();
-
+    displayCurrentPlayerName();
+    // displaying deck of cards on screen
     showCards();
+
+    // dealing cards for our players
+    dealHands();
+
+    // dealing the pile the first card of the game
+    drawStartingCard();
+
+    //start game time       //TODO:
+
+    //setting game turn counter to 1
+
+    while ( (!gameOver) && (!gameAborted) && ( TurnTime < maxTurnTimeAllowed) ) {
+
+        //restarting current turn time counter to 0;
+
+        //wait until current player end turn or abort button was activated ;
+
+        //logging current : game, turnNum , turn time, playerName, index of action, playerAction,
+
+        // Check if current player won and if so update gameOver variable to TRUE
+
+        // update the current player according to rules and direction
+    }
+
+    // pop up a window/event  declaring the game is over due to human player decided to abort game
+    if (gameAborted) {
+
+    }
+    // Show winning picture/event : announce who won and show statistics
+    if ( (!gameAborted) && (gameOver) ) {
+
+    }
+
+    //end program : show options to play a new game or close window
+
 }
 
+function drawStartingCard() {
+    var isCardLegal = false ;
+    var tmpCard;
+    do {
+
+        tmpCard = moveCard('deck','pile');
+          // todo: check if card is legal and if so change isCardLegal to TRUE
+        if (tmpCard.name !== 'CC') { isCardLegal=true;}
+        else {
+            alert('CC was dealt');
+            debugger;
+            }
+        // todo : add to readme file that the first card of the game cannot be CC and therefor another card is drawn from the deck.
+
+    } while (!isCardLegal);
+    /*
+        var card = gGameState.board.deck.pop();
+        card.isHidden=false;
+        gGameState.board.pile.push(card);
+    */
+}
 function shuffleDeck(withHtmlElements) {
     // if the parameter withHtmlElements is false the function only shuffle the deck cards in the global board deck
     // if its true than also the html elements on screen are being shuffled
@@ -129,13 +190,14 @@ function createPlayers() {
 
 function createDeck() {
     var deck = [];
+    var cardId = 1;
     for (var number in CardNumberEnum) {
         if (number === 2) {
             continue;
         }
         for (var j = 1; j <= 2; j++) {
             for (var color in ColorEnum) {
-                deck.push(new Card(ColorEnum[color], CardNumberEnum[number], null,CardNameEnum[number]));
+                deck.push(new Card(cardId++ , ColorEnum[color], CardNumberEnum[number], null,CardNameEnum[number]));
             }
         }
     }
@@ -145,13 +207,13 @@ function createDeck() {
             for (j = 1; j <= 2; j++) {
 
                 for (color in ColorEnum) {
-                    deck.push(new Card(ColorEnum[color], null, CardActionEnum[action], CardNameEnum[action]));
+                    deck.push(new Card(cardId++ , ColorEnum[color], null, CardActionEnum[action], CardNameEnum[action]));
                 }
             }
 /*        } else if (action === CardActionEnum.ChangeColor) {*/
         } else if (action === 'ChangeColor') {
             for (j = 1; j <= 4; j++) {
-                deck.push(new Card(null, null, CardActionEnum[action], CardNameEnum[action]));
+                deck.push(new Card(cardId++ , null, null, CardActionEnum[action], CardNameEnum[action]));
             }
         }
     }
@@ -167,6 +229,7 @@ function pickNextPlayer() {
     var currentPlayerIndex = gGameState.players.indexOf(gGameState.currentPlayer);
     var nextPlayerIndex = (currentPlayerIndex + isClockwize() ? 1 : -1) % gGameState.players.length;
     gGameState.currentPlayer = gGameState.players[nextPlayerIndex];
+    displayCurrentPlayerName();
 }
 
 function isClockwize() {
@@ -185,10 +248,11 @@ function restockDeck() {
     shuffleDeck(true);
 }
 
-function createCard(owner ,currentCard) {
+function createCardElement(owner , currentCard) {
 
     var cardContainer = document.createElement('div');
     cardContainer.classList.add('cardContainer');
+    cardContainer.setAttribute('id', 'game'+currentCard.gameOwner+'card'+currentCard.id);
 
     var card = document.createElement('div');
     card.classList.add('card', 'shadow', 'rounded');
@@ -289,24 +353,25 @@ function createCard(owner ,currentCard) {
 }
 
 function showCards() {
-        //display human player cards on screen
+/*
+    //display human player cards on screen
+    gGameState.players[0].hand.forEach(function (card) {
+        createCardElement('player', card);
+    });
 
-        gGameState.players[0].hand.forEach(function (card) {
-            createCard('player', card);
-        });
-
-        //display Bot player cards on screen
+    //display Bot player cards on screen
     gGameState.players[1].hand.forEach(function (card) {
-        createCard('bot', card);
+        createCardElement('bot', card);
     });
 
     //display pile cards on screen
     gGameState.board.pile.forEach(function (card) {
-        createCard('pile', card);
+        createCardElement('pile', card);
     });
+*/
     //display deck cards on screen
     gGameState.board.deck.forEach(function (card) {
-        createCard('deck', card);
+        createCardElement('deck', card);
     });
 
 }
@@ -368,8 +433,9 @@ function moveCard( cardOwner , cardReceiver, card) {
             ownerCardsArea = document.querySelector('.deckCardsArea');
             // remove wanted card (last child) element from old location in the DOM
             tmpCardElement = ownerCardsArea.removeChild(ownerCardsArea.lastChild);
+
             switch (cardReceiver) {
-                case 'player': {
+                case 'human': {
                     // add card to human player hand
                     gGameState.players[0].hand.push(tmpCard);
                     //add cardElement to the correct DOM location
@@ -405,20 +471,38 @@ function moveCard( cardOwner , cardReceiver, card) {
             }
             break;
         }
-        case 'player': {
-            // ---------------------------code is missing here ------------------------
+        case 'human': {
 
-            // add card to pile
+            // TODO: ---------------------------code is missing here ------------------------
+            // take chosen card from player
+
+            // find chosen card old location on the DOM
+
+            // remove chosen card element from old location in the DOM
+
+
+            // add chosen card to pile
             gGameState.board.pile.push(tmpCard);
+            // update the board pile leading card
+            gGameState.board.leadingCard = tmpCard;
             //add cardElement to the correct DOM location
             receiverCardsArea = document.querySelector('.pileCardsArea');
             receiverCardsArea.appendChild(tmpCardElement);
             break;
         }
         case 'bot':{
-            // ---------------------------code is missing here ------------------------
-            // add card to pile
+            // TODO: ---------------------------code is missing here ------------------------
+            // take chosen card from bot
+
+            // find chosen card old location on the DOM
+
+            // remove chosen card element from old location in the DOM
+
+
+            // add chosen card to pile
             gGameState.board.pile.push(tmpCard);
+            // update the board pile leading card
+            gGameState.board.leadingCard = tmpCard;
             //add cardElement to the correct DOM location
             receiverCardsArea = document.querySelector('.pileCardsArea');
             receiverCardsArea.appendChild(tmpCardElement);
@@ -428,7 +512,7 @@ function moveCard( cardOwner , cardReceiver, card) {
         }
         case 'pile':{
             // The leading card must stay in the pile
-            // if this is the last card on the pile it cannot move it
+            // if this is the last card on the pile it cannot be moved
             if ( gGameState.board.pile.length === 1 ) {
                 break;
             }
@@ -458,8 +542,81 @@ function moveCard( cardOwner , cardReceiver, card) {
     if ( gGameState.board.deck.length === 0 ) {
         restockDeck();
     }
+    return tmpCard;
 }
 
 function dblclickfunction() {
      alert('clicked');
 }
+
+function endTurn() {
+    isTurnEnded =true;
+    alert('turn ended');
+}
+function abortGame() {
+    isGameAborted=true;
+    alert('Game Aborted');
+
+}
+
+
+
+
+function startTime() {
+    var today = new Date();
+    var h = today.getHours();
+    var m = today.getMinutes();
+    var s = today.getSeconds();
+    var d = today.getDay();
+    var weekday = new Array(7);
+    weekday[0] =  "Sunday";
+    weekday[1] = "Monday";
+    weekday[2] = "Tuesday";
+    weekday[3] = "Wednesday";
+    weekday[4] = "Thursday";
+    weekday[5] = "Friday";
+    weekday[6] = "Saturday";
+    var day = weekday[d];
+    m = checkTime(m);
+    s = checkTime(s);
+    document.getElementById('day&Time').innerHTML =
+        day + " " + h + ":" + m + ":" + s;
+    var t = setTimeout(startTime, 500);
+}
+function checkTime(i) {
+    if (i < 10) {i = "0" + i};  // add zero in front of numbers < 10
+    return i;
+}
+
+
+function displayTurnNumber() {
+
+}
+
+function displayGameTime() {
+
+}
+function displayTurnTime() {
+
+}
+function displayCurrentPlayer() {
+
+}
+function displayCurrentPlayerName() {
+    document.getElementById('currentPlayer').innerHTML = gGameState.currentPlayer.name;
+
+}
+/*
+
+function displayGameStatus() {
+
+    document.getElementById('turnNumber').innerHTML = gGameState.currentPlayer.name;
+    document.getElementById('gameTime').innerHTML = gGameState.currentPlayer.name;
+    document.getElementById('turnTime').innerHTML = gGameState.currentPlayer.name;
+    document.getElementById('currentPlayer').innerHTML = gGameState.currentPlayer.name;
+    document.getElementById('turnNumber').innerHTML = gGameState.currentPlayer.name;
+    document.getElementById('gameTime').innerHTML = gGameState.currentPlayer.name;
+
+}
+
+*/
