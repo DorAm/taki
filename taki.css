@@ -125,7 +125,7 @@ button {
 
 .playerCardsArea .cardContainer ,
 .deckCardsArea .cardContainer {
-    cursor: pointer;
+
 }
 
 .botCardsArea .cardContainer ,
@@ -139,7 +139,14 @@ button {
     margin-left: -78px;
 }
 
-.playerCardsArea .cardContainer:hover {
-    transform: scale(1.2);
-
+.playerCardsArea .cardContainer .card:hover,
+.deckCardsArea .cardContainer:last-child .card:hover {
+    cursor: pointer;
+    transform: scale(1.3);
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    -ms-transition: all 0.5s ease;
+    transition: all 0.8s ease;
+    z-index: 1;
 }
