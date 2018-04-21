@@ -1,12 +1,18 @@
 
 .cardContainer {
     height: 115px;
-    width: 85px;
+    width: 80px;
 }
 .card {
     height: 100%;
     /*transform-style: preserve-3d;*/
     transition: all 1s ease-in-out;
+
+    position: relative;
+/*    margin-right: 5px;*/
+    background: #fff;
+
+
 }
 .card:hover{
     transform:rotateY(180deg);
@@ -63,13 +69,12 @@
     margin-left:  auto;
     margin-right: auto;
     position: relative;
-    top:    4.5%;
+    top:    5.5%;
 }
 
 .shadow {
-    box-shadow: 1px 1px 3px #000; -moz-box-shadow: 1px 1px 3px #000; -webkit-box-shadow: 1px 1px 3px #000;
+    box-shadow: 2px 3px 7px #000; -moz-box-shadow: 2px 3px 7px #000; -webkit-box-shadow: 2px 3px 7px #000;
 }
-
 .rounded {
     border-radius:10px; -moz-border-radius:10px; -webkit-border-radius:10px;
 }

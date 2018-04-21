@@ -1,3 +1,9 @@
+
+/** {margin: 0; padding: 0;}*/
+
+body {
+    background: #00a651;
+}
 h1 {
     font-size: 50px;
     text-transform: uppercase;
@@ -130,5 +136,10 @@ button {
 .pileCardsArea .cardContainer,
 .deckCardsArea .cardContainer {
     position: relative;
-    margin-left: -83px;
+    margin-left: -78px;
+}
+
+.playerCardsArea .cardContainer:hover {
+    transform: scale(1.2);
+
 }
