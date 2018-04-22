@@ -677,21 +677,96 @@ function timeCounter(gameTime) {
 }
 
 function playMove( currentPlayer, playerAction , cardId ) {
-    //1.check if move is legal
+    var playerHand, playerCard, lCard;
 
-    // if move illegal abort move and put alert on screen
-    //  else (if move is legal):
-    // 1.implement move
-    if ( playerAction === 'getCard') {
-        moveCard('deck',currentPlayer , cardId);
-    } else if ( playerAction === 'putCard') {
-        moveCard(currentPlayer, 'pile', cardId);
+    // determine player's hand and card
+    if (currentPlayer === 'human') {
+        playerHand = gGameState.players[0].hand;
+        playerCard = playerHand[(findInHand(currentPlayer, 'id', cardId))[0]];
     }
-    // 2.timestamp and log move.
-    // 3. if turn not over ask for next move
-    //  else (turn is over) :
-    // end turn and log turnTime and other stats that are needed
+    else if (currentPlayer === 'bot') {
+        playerHand = gGameState.players[1].hand;
+        playerCard = playerHand[(findInHand(currentPlayer, 'id', cardId))[0]];
+    }
+    // determine leading card
+    lCard = gGameState.board.leadingCard;
+    debugger;
+    // check if moving the playerCard on the leading Card is legal according to game rules
+    // if move illegal abort move and put alert on screen
+    debugger;
+    if (!isMoveLegal(playerCard, lCard)) {
+        alert('this move is illegal!!! \n Please try a different one')
+
+    } else {
+        // if move is legal execute the following steps :
+        // 1. implement move
+        if (playerAction === 'getCard') {
+            moveCard('deck', currentPlayer, cardId);
+        } else if (playerAction === 'putCard') {
+            moveCard(currentPlayer, 'pile', cardId);
+        }
+        // 2.timestamp and log move.
+
+        // 3. if turn not over ask for next move
+        if (!isTurnEnded() ) {
+
+        // (turn is over):
+        } else {
+            // end turn and log turnTime and other stats that are needed
+
+            //save turn time
+            gGameState.currentTurnTime =
+
+            //increment game turn index
+            gGameState.currentTurnNumber++;
+
+/*
+            statistics: {
+                gameId: 0,
+                    gameTurns: 0,
+                    gameTime: null,
+                    averageTime: null,
+                    gameWinner : null,
+                    gameLog: [] // each line consists of :
+                                // turn number, date&time,turn duration, player name, card name, color, action,
+                // card description, Number of cards taken from deck
+                // p1CardsNumber , pl2CardsNumber , leading card, of cards
+
+*/
+        }
 
 
+
+    }
 }
 
+function isMoveLegal(playerCard , leadCard) {
+
+    if ( (leadCard.color === playerCard.color) && (playerCard.color !==null) ) {
+        if ( playerCard.action !== null ) {
+            // להניח קלף פעולה שצבעו זהה לקלף העליון בערימה המרכזית
+
+            return true;
+        } else {
+            // להניח קלף שצבעו זהה לקלף העליון בערימה המרכזית
+
+            return true;
+        }
+    }
+    if ( (leadCard.number === playerCard.number) && (playerCard.number !==null) ) {
+    // להניח קלף שמספרו זהה לקלף העליון בערמה המרכזית
+
+        return true;
+    }
+    if ( (playerCard.action !== null) && (playerCard.color === null) ) {
+    // להניח קלף פעולה ללא צבע
+
+        return true;
+    }
+    return false;
+}
+
+function isTurnEnded(playerCard , leadCard) {
+
+    return true;
+}
