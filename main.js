@@ -249,6 +249,8 @@ function restockDeck() {
 
     while (gGameState.board.pile.length > 1) {
         moveCard('pile', 'deck');
+
+
     }
     shuffleDeck(true);
 }
@@ -344,7 +346,10 @@ function createCardElement(owner , currentCard) {
             ownerCardsArea = document.querySelector('.deckCardsArea');
             if ( gGameState.board.deck[gGameState.board.deck.length-1] === currentCard ) {
                 // cardContainer.removeAttribute('ondblclick'); TODO:delete line
-                cardContainer.setAttribute('ondblclick', 'moveCard("deck", "human",' + currentCard.id + ')');
+                //cardContainer.setAttribute('ondblclick', 'moveCard("deck", "human",' + currentCard.id + ')');
+                debugger;
+                cardContainer.setAttribute('ondblclick', 'playMove("human", "getCard",' + currentCard.id + ')');
+
             }
             break;
         }
@@ -461,7 +466,9 @@ function moveCard( cardOwner , cardReceiver, cardId) {
             // only if deck isn't empty we are enabling onclick function on the new card at the top of the deck
             if ( ownerCardsArea.lastElementChild !== null ) {
                 // debugger;
-                ownerCardsArea.lastElementChild.setAttribute('ondblclick','moveCard("deck", "human",'+ gGameState.board.deck[gGameState.board.deck.length-1].id + ')');
+                //ownerCardsArea.lastElementChild.setAttribute('ondblclick','moveCard("deck", "human",'+ gGameState.board.deck[gGameState.board.deck.length-1].id + ')');
+                ownerCardsArea.lastElementChild.setAttribute('ondblclick','playMove("human", "getCard",'+ gGameState.board.deck[gGameState.board.deck.length-1].id + ')');
+
             }
             switch (cardReceiver) {
                 case 'human': {
@@ -563,6 +570,8 @@ function moveCard( cardOwner , cardReceiver, cardId) {
             // remove wanted card (first child) element from old location in the DOM
             tmpCardElement = ownerCardsArea.removeChild(ownerCardsArea.firstChild);
 
+            //if the card that is being moved is ChangeColor we need to change its color back to black/null
+            changeCardColor(tmpCard, 'BLACK');
             // add card to bottom of deck for the purpose of restocking the deck
             gGameState.board.deck.unshift(tmpCard);
             //add cardElement to the correct DOM location
@@ -693,7 +702,7 @@ function timeCounter(gameTime) {
 // 2.
 function playMove( currentPlayer, playerAction , cardId ) {
     var playerHand, playerCard, lCard;
-
+    debugger;
     // determine player's hand and card
     if (currentPlayer === 'human') {
         playerHand = gGameState.players[0].hand;
@@ -705,35 +714,45 @@ function playMove( currentPlayer, playerAction , cardId ) {
     }
     // determine leading card
     lCard = gGameState.board.leadingCard;
-    //debugger;
-    // check if moving the playerCard on the leading Card is legal according to game rules
-    // if move illegal abort move and put alert on screen
-    //debugger;
-    if (!isMoveLegal(playerCard, lCard)) {
-        alert('this move is illegal!!! \n Please try a different one')
+
+    //if the requested action is to put a card in the pile :
+    if ( playerAction === 'putCard') {
+        // check if moving the playerCard on the leading Card is legal according to game rules
+        // if move illegal abort move and put alert on screen
+        if (!isMoveLegal(playerCard, lCard, false)) {
+            alert('this move is illegal!!! \n Please try a different one');
+        } else {
+            // if move is legal execute the following steps :
+            // 1. implement move
+            moveCard(currentPlayer, 'pile', cardId);
+
+        }
+    } else if (playerAction === 'getCard') {
+        // getting\taking card from deck is only legal if there is no move available for the player.
+        // only than can he take card from deck
+        // so first we check if there is an available move to make
+        debugger;
+        if (availableMoveExist(playerHand, lCard)) {
+            alert('cannot take card from deck because possible legal move exist. \n Please find and implement it');
+        } else {
+            moveCard('deck', currentPlayer, cardId);
+        }
+    }
+    // 2.timestamp and log move.
+
+    // 3. if turn not over ask for next move
+    if (!isTurnEnded(playerAction, playerCard , lCard) ) {
+
 
     } else {
-        // if move is legal execute the following steps :
-        // 1. implement move
-        if (playerAction === 'getCard') {
-            moveCard('deck', currentPlayer, cardId);
-        } else if (playerAction === 'putCard') {
-            moveCard(currentPlayer, 'pile', cardId);
-        }
-        // 2.timestamp and log move.
-
-        // 3. if turn not over ask for next move
-        if (!isTurnEnded() ) {
-
         // (turn is over):
-        } else {
-            // end turn and log turnTime and other stats that are needed
+        // end turn and log turnTime and other stats that are needed
 
-            //save turn time
-            gGameState.currentTurnTime =
+        //save turn time
+        gGameState.currentTurnTime =
 
-            //increment game turn index
-            gGameState.currentTurnNumber++;
+        //increment game turn index
+        gGameState.currentTurnNumber++;
 
 /*
             statistics: {
@@ -748,14 +767,16 @@ function playMove( currentPlayer, playerAction , cardId ) {
                 // p1CardsNumber , pl2CardsNumber , leading card, of cards
 
 */
-        }
+
 
 
 
     }
 }
-
-function isMoveLegal(playerCard , leadCard) {
+// this function is checking if a card move is legal to put playerCard on the leadCard, when isJustChecking
+// =true it means the function is called just for a checking a theoretical move but when it is
+// =FALSE it means its checking right before an actual move is about to happen
+function isMoveLegal(playerCard , leadCard, isJustChecking) {
 
     if ( (leadCard.action === playerCard.action) && (playerCard.action !==null) && (playerCard.color !==null) ) {
         // להניח קלף בעל צבע מוגדר שפעולתו זהה לקלף העליון בערמה המרכזית
@@ -783,7 +804,9 @@ function isMoveLegal(playerCard , leadCard) {
 
         // להניח קלף משנה צבע
         if ( playerCard.action ==='CC' ) {
-            askPlayer2ChooseColor(playerCard);
+            if ( !isJustChecking ) {
+                askPlayer2ChooseColor(playerCard);
+            }
             return true;
         }
 
@@ -791,10 +814,16 @@ function isMoveLegal(playerCard , leadCard) {
     }
     return false;
 }
+//TODO: need to complete function
+function isTurnEnded(playerAction, playerCard , leadCard) {
+    if (playerAction === 'putCard') {
 
-function isTurnEnded(playerCard , leadCard) {
 
-    return true;
+    } else if (playerAction === 'getCard') {
+
+        return true;
+    }
+
 }
 
 // function that is being implemented when a player chose to put the card ChangeColor.
@@ -811,7 +840,7 @@ function askPlayer2ChooseColor(playerCard){
         // Announce the color that where chosen
 
         // visibly change the card colors to the chosen color temporarily
-        tmpChangeCardColor(playerCard, chosenColor);
+        changeCardColor(playerCard, chosenColor);
 
     }
     //
@@ -819,13 +848,29 @@ function askPlayer2ChooseColor(playerCard){
 }
 
 
-function tmpChangeCardColor(playerCard, chosenColor) {
+function changeCardColor(playerCard, chosenColor) {
+
+    chosenColor !== 'BLACK' ? playerCard.color = chosenColor : playerCard.color = null;
     var cardElement = document.getElementById('game1card'+playerCard.id);
 
     //change color for frontCard and below
     var tmpElement = cardElement.firstElementChild.lastElementChild;
-    tmpElement.style.color = 'chosenColor';
+    tmpElement.style.color = chosenColor;
 
 
 
+}
+// TODO : implement this function
+// check if a player has no available card to put in a legal move
+function availableMoveExist(playerHand, leadCard) {
+    var result=[];
+    playerHand.forEach(function(card, index) {
+        if (isMoveLegal(card,leadCard,true)) {
+            result.push(index);
+        } } );
+    if ( result.length !=0 ) {
+        return true;
+    } else {
+        return false;
+    }
 }
