@@ -10,6 +10,8 @@ var gGameState = {
         owedCards2Take: 0       // number of cards the player is obligated to take from deck.every turn it sets on 1 unless 2+ are involved :-)
     },
     currentPlayer: null,
+    startingTime: null,
+    currentTurnNumber: null,
     currentTurnTime: null,
     isTurnEnded   : false,
     isGameAborted : false,
@@ -104,9 +106,12 @@ function startGame() {
     // dealing the pile the first card of the game
     drawStartingCard();
 
-    //start game time       //TODO:
-
+    //stamping game starting time       //TODO:
+    gGameState.startingTime = new Date().getTime();
     //setting game turn counter to 1
+    gGameState.currentTurnNumber = 1;
+    // display game status on screen
+    displayGameStatus();
 
     while ( (!gameOver) && (!gameAborted) && ( TurnTime < maxTurnTimeAllowed) ) {
 
@@ -257,7 +262,7 @@ function createCardElement(owner , currentCard) {
     var card = document.createElement('div');
     card.classList.add('card', 'shadow', 'rounded');
 //  cardOutline.setAttribute('onclick',"activatingCard(currentCard)");
-    card.setAttribute('ondblclick','dblclickfunction()');
+//  card.setAttribute('ondblclick','dblclickfunction()');
 
     var frontCard = document.createElement(('div'));
     frontCard.classList.add('frontCard','shadow','rounded');
@@ -331,6 +336,10 @@ function createCardElement(owner , currentCard) {
     switch ( owner ) {
         case 'deck': {
             ownerCardsArea = document.querySelector('.deckCardsArea');
+            if ( gGameState.board.deck[gGameState.board.deck.length-1] === currentCard ) {
+                // cardContainer.removeAttribute('ondblclick'); TODO:delete line
+                cardContainer.setAttribute('ondblclick', 'moveCard("deck", "human",' + currentCard.id + ')');
+            }
             break;
         }
         case 'pile': {
@@ -375,6 +384,9 @@ function showCards() {
     });
 
 }
+//  searching for cards in a player's hand that their "key" property equals the value of "value".
+//  Function returns an array that its properties are the indexes of the cards that their key=value are matched.
+//  if none were found the array will be empty.
 function findInHand(playerName, key, value ) {
     var hand;
     // playerName === gGameState.players[0].name ? hand = gGameState.players[0].hand : hand = gGameState.players[1].hand;
@@ -384,6 +396,7 @@ function findInHand(playerName, key, value ) {
         hand = gGameState.players[1].hand;
     } else return "Error: wrongNamePlayer" ;        //TODO : what kind of errors we should present ?
     var result = [];
+    // debugger;
     hand.forEach(function (card, index) {
         if (card [key] === value) {
             result.push(index)
@@ -419,8 +432,8 @@ function rollOverCard( card, cardElement) {
         backCard.parentNode.appendChild(tmpCardElem);
     }
 }
-
-function moveCard( cardOwner , cardReceiver, card) {
+// functions that moves a card with id=cardId from cardOwner to cardReceiver
+function moveCard( cardOwner , cardReceiver, cardId) {
     var tmpCard ;
     var ownerCardsArea ;
     var tmpCardElement ;
@@ -433,9 +446,19 @@ function moveCard( cardOwner , cardReceiver, card) {
             ownerCardsArea = document.querySelector('.deckCardsArea');
             // remove wanted card (last child) element from old location in the DOM
             tmpCardElement = ownerCardsArea.removeChild(ownerCardsArea.lastChild);
-
+            // disable onclick function on current card
+            tmpCardElement.removeAttribute('ondblclick');
+            // only if deck isn't empty we are enabling onclick function on the new card at the top of the deck
+            if ( ownerCardsArea.lastElementChild !== null ) {
+                // debugger;
+                ownerCardsArea.lastElementChild.setAttribute('ondblclick','moveCard("deck", "human",'+ gGameState.board.deck[gGameState.board.deck.length-1].id + ')');
+            }
             switch (cardReceiver) {
                 case 'human': {
+                    // enable onDoubleClick function on current card
+                    // debugger;
+                    /*tmpCardElement.setAttribute('ondblclick','moveCard("human", "pile",'+ tmpCard+ ')');*/
+                    tmpCardElement.setAttribute('ondblclick','moveCard("human", "pile",'+ tmpCard.id + ')');
                     // add card to human player hand
                     gGameState.players[0].hand.push(tmpCard);
                     //add cardElement to the correct DOM location
@@ -474,13 +497,18 @@ function moveCard( cardOwner , cardReceiver, card) {
         case 'human': {
 
             // TODO: ---------------------------code is missing here ------------------------
-            // take chosen card from player
+            // take chosen card from player and put it in tmpCard
+            var cardIndexInHand = (findInHand(cardOwner,'id',cardId))[0];
+            tmpCard = gGameState.players[0].hand.splice( cardIndexInHand , 1 );
 
-            // find chosen card old location on the DOM
-
+            // find chosen card old location Area on the DOM
+            ownerCardsArea = document.querySelector('.playerCardsArea');
+            var tmpCardElement2 = document.getElementById('game1' /*+ tmpCard.gameOwner*/ + 'card'+ cardId );
+            // debugger;
             // remove chosen card element from old location in the DOM
-
-
+            tmpCardElement = ownerCardsArea.removeChild(ownerCardsArea.childNodes[cardIndexInHand+1]);
+            // verification check if we have the correct card Element
+            if (tmpCardElement !== tmpCardElement2) { alert('problem with tmpCardElement');}
             // add chosen card to pile
             gGameState.board.pile.push(tmpCard);
             // update the board pile leading card
@@ -588,35 +616,62 @@ function checkTime(i) {
     return i;
 }
 
-
-function displayTurnNumber() {
-
-}
-
-function displayGameTime() {
-
-}
-function displayTurnTime() {
-
-}
-function displayCurrentPlayer() {
-
-}
 function displayCurrentPlayerName() {
     document.getElementById('currentPlayer').innerHTML = gGameState.currentPlayer.name;
-
 }
-/*
-
 function displayGameStatus() {
+    document.getElementById('turnNumber').innerHTML = gGameState.currentTurnNumber;
 
-    document.getElementById('turnNumber').innerHTML = gGameState.currentPlayer.name;
-    document.getElementById('gameTime').innerHTML = gGameState.currentPlayer.name;
-    document.getElementById('turnTime').innerHTML = gGameState.currentPlayer.name;
+    document.getElementById('gameTime').innerHTML = timeCounter('gameTime');
+    document.getElementById('turnTime').innerHTML = timeCounter('turnTime');
+
     document.getElementById('currentPlayer').innerHTML = gGameState.currentPlayer.name;
-    document.getElementById('turnNumber').innerHTML = gGameState.currentPlayer.name;
-    document.getElementById('gameTime').innerHTML = gGameState.currentPlayer.name;
 
+    // var t = setTimeout(displayCurrentPlayerName, 500);
 }
 
+
+/*
+// Set the date we're counting down to
+var countDownDate = new Date("Sep 5, 2018 15:37:25").getTime();
 */
+
+
+function timeCounter(gameTime) {
+
+    //set starting date
+    var startingDate = new Date().getTime();
+
+    // Update the count down every 1 second
+    var x = setInterval(function () {
+
+        // Get today's date and time
+        var now = new Date().getTime();
+
+        // Find the distance between now an the starting date
+        var distance = now - startingDate;
+
+        // Time calculations for days, hours, minutes and seconds
+        var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+        hours = checkTime(hours);
+        minutes = checkTime(minutes);
+        seconds  = checkTime(seconds);
+
+        // Display the result in the element with id=[gameTime]
+        if (gameTime === 'turnTime'){
+            document.getElementById(gameTime).innerHTML = minutes + ':' + seconds;
+        } else {
+            document.getElementById(gameTime).innerHTML = hours + ':' + minutes + ':' + seconds;
+        }
+
+        // If the count down is finished, write some text
+        if (distance > (1000*60*5) ) {
+            clearInterval(x);
+            document.getElementById(gameTime).innerHTML = "EXPIRED";
+        }
+    }, 500);
+}
