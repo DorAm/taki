@@ -33,6 +33,14 @@
 }
 
 .cardTop,
+.cardCenter,
+.cardBottom,
+.cardTop div,
+.cardCenter div,
+.cardBottom div {
+    color: inherit;
+}
+.cardTop,
 .cardBottom {
     display: flex;
     justify-content: space-between;
@@ -42,6 +50,7 @@
     font-family: fantasy;
     padding-top: 10%;
     padding-bottom: 10%;
+
 }
 
 .cardCenter {

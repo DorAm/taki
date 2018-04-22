@@ -266,6 +266,9 @@ function createCardElement(owner , currentCard) {
 
     var frontCard = document.createElement(('div'));
     frontCard.classList.add('frontCard','shadow','rounded');
+
+    //debugger;
+    currentCard.color ? frontCard.style.color = currentCard.color : frontCard.style.color = 'BLACK';
     var backCard = document.createElement(('div'));
     backCard.classList.add('backCard','shadow','rounded');
 
@@ -287,7 +290,7 @@ function createCardElement(owner , currentCard) {
         var icon = document.createElement('div');
         var text = document.createTextNode(currentCard.name);
         /*       icon.style.color = card.color;*/
-        currentCard.color ? icon.style.color = currentCard.color : icon.style.color = 'BLACK';
+    //    currentCard.color ? icon.style.color = currentCard.color : icon.style.color = 'BLACK';
         icon.appendChild(text);
         cardTop.appendChild(icon);
     }
@@ -295,7 +298,7 @@ function createCardElement(owner , currentCard) {
     var text = document.createTextNode(currentCard.name);
     var icon = document.createElement('div');
     /*        icon.style.color = currentCard.color;*/
-    currentCard.color ? icon.style.color = currentCard.color : icon.style.color = 'BLACK';
+    //currentCard.color ? icon.style.color = currentCard.color : icon.style.color = 'BLACK';
     icon.appendChild(text);
 
     cardCenter.appendChild(icon);
@@ -305,7 +308,7 @@ function createCardElement(owner , currentCard) {
         var icon = document.createElement('div');
         var text = document.createTextNode(currentCard.name);
         /*        icon.style.color = currentCard.color;*/
-        currentCard.color ? icon.style.color = currentCard.color : icon.style.color = 'BLACK';
+        //currentCard.color ? icon.style.color = currentCard.color : icon.style.color = 'BLACK';
         icon.appendChild(text);
         cardBottom.appendChild(icon);
     }
@@ -321,8 +324,11 @@ function createCardElement(owner , currentCard) {
     cardCover.appendChild(img);
 
     if ( !currentCard.isHidden ) {
-        backCard.setAttribute('style','top: 0%');
-        frontCard.setAttribute('style', 'top: -100%');
+        //backCard.setAttribute('style','top: 0%');
+        backCard.style.top='0%';
+        //frontCard.setAttribute('style', 'top: -100%');
+        frontCard.style.top= '-100%';
+
         backCard.parentNode.insertBefore(backCard, frontCard);
 /*
         //the opposite:
@@ -415,8 +421,10 @@ function rollOverCard( card, cardElement) {
 
         backCard  = cardElement.firstChild.firstChild;
         frontCard = cardElement.firstChild.lastChild;
-        backCard.setAttribute('style', 'top: -100%');
-        frontCard.setAttribute('style', 'top: 0%');
+        //backCard.setAttribute('style', 'top: -100%');
+        backCard.style.top='-100%';
+        //frontCard.setAttribute('style', 'top: 0%');
+        frontCard.style.top='0%';
         tmpCardElem = backCard.parentNode.removeChild(frontCard);
         backCard.parentNode.insertBefore(tmpCardElem ,cardElement.firstChild.lastChild);
         // insertBefore(backCard, frontCard);
@@ -426,8 +434,10 @@ function rollOverCard( card, cardElement) {
 
         frontCard = cardElement.firstChild.firstChild;
         backCard  = cardElement.firstChild.lastChild;
-        backCard.setAttribute('style', 'top: 0%');
-        frontCard.setAttribute('style', 'top: -100%');
+        //backCard.setAttribute('style', 'top: 0%');
+        backCard.style.top='0%';
+        //frontCard.setAttribute('style', 'top: -100%');
+        frontCard.style.top= '-100%';
         tmpCardElem = backCard.parentNode.removeChild(frontCard);
         backCard.parentNode.appendChild(tmpCardElem);
     }
@@ -499,7 +509,7 @@ function moveCard( cardOwner , cardReceiver, cardId) {
             // TODO: ---------------------------code is missing here ------------------------
             // take chosen card from player and put it in tmpCard
             var cardIndexInHand = (findInHand(cardOwner,'id',cardId))[0];
-            tmpCard = gGameState.players[0].hand.splice( cardIndexInHand , 1 );
+            tmpCard = gGameState.players[0].hand.splice( cardIndexInHand , 1 )[0];
 
             // find chosen card old location Area on the DOM
             ownerCardsArea = document.querySelector('.playerCardsArea');
@@ -675,7 +685,12 @@ function timeCounter(gameTime) {
         }
     }, 500);
 }
-
+// function that receives: player's name(human or bot), the type of action that is being performed(getCard from deck or
+// putCard in pile), the id of the card that is being getting/putting
+// It checks if the requested move is legal or not. if its illegal it shows a message and asks for a different
+// move. if its legal several steps are being performed
+// 1. The move is being implemented.
+// 2.
 function playMove( currentPlayer, playerAction , cardId ) {
     var playerHand, playerCard, lCard;
 
@@ -690,10 +705,10 @@ function playMove( currentPlayer, playerAction , cardId ) {
     }
     // determine leading card
     lCard = gGameState.board.leadingCard;
-    debugger;
+    //debugger;
     // check if moving the playerCard on the leading Card is legal according to game rules
     // if move illegal abort move and put alert on screen
-    debugger;
+    //debugger;
     if (!isMoveLegal(playerCard, lCard)) {
         alert('this move is illegal!!! \n Please try a different one')
 
@@ -742,6 +757,11 @@ function playMove( currentPlayer, playerAction , cardId ) {
 
 function isMoveLegal(playerCard , leadCard) {
 
+    if ( (leadCard.action === playerCard.action) && (playerCard.action !==null) && (playerCard.color !==null) ) {
+        // להניח קלף בעל צבע מוגדר שפעולתו זהה לקלף העליון בערמה המרכזית
+
+        return true;
+    }
     if ( (leadCard.color === playerCard.color) && (playerCard.color !==null) ) {
         if ( playerCard.action !== null ) {
             // להניח קלף פעולה שצבעו זהה לקלף העליון בערימה המרכזית
@@ -761,7 +781,13 @@ function isMoveLegal(playerCard , leadCard) {
     if ( (playerCard.action !== null) && (playerCard.color === null) ) {
     // להניח קלף פעולה ללא צבע
 
-        return true;
+        // להניח קלף משנה צבע
+        if ( playerCard.action ==='CC' ) {
+            askPlayer2ChooseColor(playerCard);
+            return true;
+        }
+
+        return true;        //TODO: might need to delete this line
     }
     return false;
 }
@@ -769,4 +795,37 @@ function isMoveLegal(playerCard , leadCard) {
 function isTurnEnded(playerCard , leadCard) {
 
     return true;
+}
+
+// function that is being implemented when a player chose to put the card ChangeColor.
+// it asks the player to choose a color between 4 colors
+function askPlayer2ChooseColor(playerCard){
+    var chosenColor;
+    //verify that playerCard is of action type "Change Color"
+    if ( playerCard.action !== 'CC') {
+        alert('Error!!! \n you used askPlayer2ChooseColor function with a card that isnt Change Color')
+    } else {
+        //ask player to choose a color and put the answer in chosenColor
+        chosenColor = 'BLUE';
+
+        // Announce the color that where chosen
+
+        // visibly change the card colors to the chosen color temporarily
+        tmpChangeCardColor(playerCard, chosenColor);
+
+    }
+    //
+
+}
+
+
+function tmpChangeCardColor(playerCard, chosenColor) {
+    var cardElement = document.getElementById('game1card'+playerCard.id);
+
+    //change color for frontCard and below
+    var tmpElement = cardElement.firstElementChild.lastElementChild;
+    tmpElement.style.color = 'chosenColor';
+
+
+
 }
