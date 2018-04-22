@@ -52,8 +52,6 @@ function toggleDisplay(selector) {
     x[0].style.display === "none" ? x[0].style.display = "block" : x[0].style.display = "none";
 }
 
-// TODO: each turn we need to check : if ( isDeckEmpty() ) restockDeck();
-
 // card constructor
 function Card( id, color, number, action, name) {
     this.gameOwner = 1;
@@ -269,7 +267,7 @@ function createCardElement(owner , currentCard) {
     var frontCard = document.createElement(('div'));
     frontCard.classList.add('frontCard','shadow','rounded');
 
-    //debugger;
+
     currentCard.color ? frontCard.style.color = currentCard.color : frontCard.style.color = 'BLACK';
     var backCard = document.createElement(('div'));
     backCard.classList.add('backCard','shadow','rounded');
@@ -347,7 +345,7 @@ function createCardElement(owner , currentCard) {
             if ( gGameState.board.deck[gGameState.board.deck.length-1] === currentCard ) {
                 // cardContainer.removeAttribute('ondblclick'); TODO:delete line
                 //cardContainer.setAttribute('ondblclick', 'moveCard("deck", "human",' + currentCard.id + ')');
-                debugger;
+
                 cardContainer.setAttribute('ondblclick', 'playMove("human", "getCard",' + currentCard.id + ')');
 
             }
@@ -407,7 +405,7 @@ function findInHand(playerName, key, value ) {
         hand = gGameState.players[1].hand;
     } else return "Error: wrongNamePlayer" ;        //TODO : what kind of errors we should present ?
     var result = [];
-    // debugger;
+
     hand.forEach(function (card, index) {
         if (card [key] === value) {
             result.push(index)
@@ -465,7 +463,7 @@ function moveCard( cardOwner , cardReceiver, cardId) {
             tmpCardElement.removeAttribute('ondblclick');
             // only if deck isn't empty we are enabling onclick function on the new card at the top of the deck
             if ( ownerCardsArea.lastElementChild !== null ) {
-                // debugger;
+
                 //ownerCardsArea.lastElementChild.setAttribute('ondblclick','moveCard("deck", "human",'+ gGameState.board.deck[gGameState.board.deck.length-1].id + ')');
                 ownerCardsArea.lastElementChild.setAttribute('ondblclick','playMove("human", "getCard",'+ gGameState.board.deck[gGameState.board.deck.length-1].id + ')');
 
@@ -473,7 +471,7 @@ function moveCard( cardOwner , cardReceiver, cardId) {
             switch (cardReceiver) {
                 case 'human': {
                     // enable onDoubleClick function on current card
-                    // debugger;
+
                     // tmpCardElement.setAttribute('ondblclick','moveCard("human", "pile",'+ tmpCard.id + ')');
                     tmpCardElement.setAttribute('ondblclick','playMove("human", "putCard", '+tmpCard.id + ')');
                     // add card to human player hand
@@ -521,7 +519,7 @@ function moveCard( cardOwner , cardReceiver, cardId) {
             // find chosen card old location Area on the DOM
             ownerCardsArea = document.querySelector('.playerCardsArea');
             var tmpCardElement2 = document.getElementById('game1' /*+ tmpCard.gameOwner*/ + 'card'+ cardId );
-            // debugger;
+
             // remove chosen card element from old location in the DOM
             tmpCardElement = ownerCardsArea.removeChild(ownerCardsArea.childNodes[cardIndexInHand+1]);
             // verification check if we have the correct card Element
@@ -702,7 +700,7 @@ function timeCounter(gameTime) {
 // 2.
 function playMove( currentPlayer, playerAction , cardId ) {
     var playerHand, playerCard, lCard;
-    debugger;
+
     // determine player's hand and card
     if (currentPlayer === 'human') {
         playerHand = gGameState.players[0].hand;
@@ -731,7 +729,7 @@ function playMove( currentPlayer, playerAction , cardId ) {
         // getting\taking card from deck is only legal if there is no move available for the player.
         // only than can he take card from deck
         // so first we check if there is an available move to make
-        debugger;
+
         if (availableMoveExist(playerHand, lCard)) {
             alert('cannot take card from deck because possible legal move exist. \n Please find and implement it');
         } else {
