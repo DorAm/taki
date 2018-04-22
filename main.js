@@ -457,8 +457,8 @@ function moveCard( cardOwner , cardReceiver, cardId) {
                 case 'human': {
                     // enable onDoubleClick function on current card
                     // debugger;
-                    /*tmpCardElement.setAttribute('ondblclick','moveCard("human", "pile",'+ tmpCard+ ')');*/
-                    tmpCardElement.setAttribute('ondblclick','moveCard("human", "pile",'+ tmpCard.id + ')');
+                    // tmpCardElement.setAttribute('ondblclick','moveCard("human", "pile",'+ tmpCard.id + ')');
+                    tmpCardElement.setAttribute('ondblclick','playMove("human", "putCard", '+tmpCard.id + ')');
                     // add card to human player hand
                     gGameState.players[0].hand.push(tmpCard);
                     //add cardElement to the correct DOM location
@@ -675,3 +675,23 @@ function timeCounter(gameTime) {
         }
     }, 500);
 }
+
+function playMove( currentPlayer, playerAction , cardId ) {
+    //1.check if move is legal
+
+    // if move illegal abort move and put alert on screen
+    //  else (if move is legal):
+    // 1.implement move
+    if ( playerAction === 'getCard') {
+        moveCard('deck',currentPlayer , cardId);
+    } else if ( playerAction === 'putCard') {
+        moveCard(currentPlayer, 'pile', cardId);
+    }
+    // 2.timestamp and log move.
+    // 3. if turn not over ask for next move
+    //  else (turn is over) :
+    // end turn and log turnTime and other stats that are needed
+
+
+}
+
