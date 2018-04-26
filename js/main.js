@@ -89,38 +89,25 @@ function drawStartingCard() {
 }
 
 function shuffleDeckCards() {
-    debugger;
     var randomCardIndex;
     var deckOfCards = GameState.board.deck;
-    swap(deckOfCards[0], deckOfCards[1]);
-    // var length = deckOfCards.length;
-    // for (i = 0; i < length - 1; i++) {
-    //     randomCardIndex = getRandomInt(0, length);
-    //     swapCards(deckOfCards[i], deckOfCards[randomCardIndex]);
-    //     swapCardsInDOM();
-    // }
+    var length = deckOfCards.length;
+    for (i = 0; i < length - 1; i++) {
+        randomCardIndex = getRandomInt(0, length);
+        swapCards(i, randomCardIndex);
+        debugger;
+        swapCardsInDOM(i, randomCardIndex);
+    }
 }
 
 function swapCards(firstCard, secondCard) {
-    swap(firstCard, secondCard);
+    swap(firstCard, secondCard, GameState.board.deck);
 }
 
 function swapCardsInDOM(firstCard, secondCard) {
     var container = document.querySelector('.deckCardsArea');
-    swapInDOM(firstCard, secondCard, container);
+    swapInDOM(container.childNodes[firstCard], container.childNodes[secondCard], container);
 }
-
-
-// function shuffleDeckCards() {
-//     var j, x, i;
-//     var deckOfCards = GameState.board.deck;
-//     for (i = deckOfCards.length - 1; i > 0; i--) {
-//         j = Math.floor(Math.random() * (i + 1));
-//         x = deckOfCards[i];
-//         deckOfCards[i] = deckOfCards[j];
-//         deckOfCards[j] = x;
-//     }
-// }
 
 function createPlayers() {
     GameState.players = [
@@ -132,16 +119,16 @@ function createPlayers() {
 function createDeckCards() {
     var deck = [];
     var cardId = 1;
-    // for (var number in CardNumberEnum) {
-    //     if (number === 2) {
-    //         continue;
-    //     }
-    //     for (var j = 1; j <= 2; j++) {
-    //         for (var color in ColorEnum) {
-    //             deck.push(new Card(cardId++, ColorEnum[color], CardNumberEnum[number], null, CardNameEnum[number]));
-    //         }
-    //     }
-    // }
+    for (var number in CardNumberEnum) {
+        if (number === 2) {
+            continue;
+        }
+        for (var j = 1; j <= 2; j++) {
+            for (var color in ColorEnum) {
+                deck.push(new Card(cardId++, ColorEnum[color], CardNumberEnum[number], null, CardNameEnum[number]));
+            }
+        }
+    }
     for (var action in CardActionEnum) {
         // if (action !== CardActionEnum.ChangeColor) {         TODO: find a way to use ENUM here
         if (action !== 'ChangeColor') {
