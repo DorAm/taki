@@ -5,9 +5,7 @@ var gGameState = {
         leadingCard: null,
         activeCard: null,
         direction: 'CLOCKWIZE',
-        twoPlusActiveCards: 0,
-        takiInvoked: false,
-        owedCards2Take: 0       // number of cards the player is obligated to take from deck.every turn it sets on 1 unless 2+ are involved :-)
+        endTurnButtonEnabled: false // when this is enabled. the ent turn button will work otherwise it will give an error massage
     },
     currentPlayer: null,
     startingTime: null,
@@ -15,7 +13,8 @@ var gGameState = {
     currentTurnTime: null,
     isTurnEnded   : false,
     isGameAborted : false,
-
+    twoPlusInvoked: 0,
+    takiInvoked: false,
 
     // currentNumber: null,
     // currentAction: null,
@@ -46,7 +45,7 @@ function initGame() {
 
     startGame();
 }
-
+// this function display/hide an element by its class selector
 function toggleDisplay(selector) {
     var x = document.getElementsByClassName(selector);
     x[0].style.display === "none" ? x[0].style.display = "block" : x[0].style.display = "none";
@@ -776,11 +775,14 @@ function playMove( currentPlayer, playerAction , cardId ) {
 // =FALSE it means its checking right before an actual move is about to happen
 function isMoveLegal(playerCard , leadCard, isJustChecking) {
 
+/*
+    // אם הבנתי נכון את תשובת המרצה צעד כזה איננו נחשב לחוקי לכן הוא הפך להערה//
     if ( (leadCard.action === playerCard.action) && (playerCard.action !==null) && (playerCard.color !==null) ) {
         // להניח קלף בעל צבע מוגדר שפעולתו זהה לקלף העליון בערמה המרכזית
 
         return true;
     }
+*/
     if ( (leadCard.color === playerCard.color) && (playerCard.color !==null) ) {
         if ( playerCard.action !== null ) {
             // להניח קלף פעולה שצבעו זהה לקלף העליון בערימה המרכזית
@@ -872,3 +874,157 @@ function availableMoveExist(playerHand, leadCard) {
         return false;
     }
 }
+
+// this function determines BOT's next move according to leading card and the hand it has.
+function botMind() {
+    var lCard = gGameState.board.leadingCard;
+    var res2Plus = [];
+    var resColor= [] ;
+    var resCC = [];
+    var resStop=[];
+    var resTaki=[];
+    var res2PlusSameColorIndex, resTakiSameColorIndex;
+    resColor = findInHand('bot','color',lCard.color);
+
+    // קיים (לפחות) קלף +2 אחד פעיל
+    if ( gGameState.twoPlusInvoked ) {
+        if ( (res2Plus = findInHand('bot', 'action' , 'TWO_PLUS' )).length !== 0 ) {
+            // אם יש למחשב +2 אז הוא שם אחד מהם - הראשון שנמצא ביד שלו
+            playMove('bot','putCard', gGameState.players[1].hand[res2Plus[0]].id );
+
+        }
+        else if ( !res2Plus) {
+            // אם למחשב אין +2 אז לקחת כמה קלפים שצריך מהקופה  מהקופה
+            while ( gGameState.twoPlusInvoked ) {
+                take2Cards('bot');
+            }
+        }
+    }
+    // 4.2.  במידה ולשחקן הממוחשב יש קלף 2+ שצבעו זהה לקלף העליון בערימה המרכזית יניח קלף זה בערימה המרכזית
+
+    if ( res2Plus.length !==0 ) {
+        // מחפש עם קיים +2 באותו הצבע של הקלף המוביל. אם כן, המשתנה res2PlusSameColorIndex
+        // מקבל את ערך האינדקס שלו ביד של השחקן אחרת למשתנה ערך UNDEFINED
+        res2Plus.forEach(function (res2PlusItem) {
+            if (res2PlusSameColorIndex === undefined) {
+                res2PlusSameColorIndex = resColor.find(res2PlusItem);
+            } });
+        // במקרה שמצאנו 2+ באותו צבע, אנחנו מניחים אות
+        if (res2PlusSameColorIndex !== undefined) {
+            playMove('bot', 'putCard', gGameState.players[1].hand[res2PlusSameColorIndex].id);
+        }
+    }
+    // 4.3. במידה ולשחקן הממוחשב יש קלף שנה צבע – יניח אותו בערימה המרכזית ויבחר צבע בצורה אקראית
+    if ( (resCC = findInHand('bot','action','CC')).length !== 0 ) {
+            playMove('bot', 'putCard', gGameState.players[1].hand[resCC[0]].id);
+            // TODO: need to choose color randomly here
+
+    }
+    // 4.4. במידה ולשחקן הממוחשב יש קלף עצור שצבעו זהה לקלף העליון בערימה המרכזית – יניח קלף זה בערימה המרכזית
+    if ( (resStop = findInHand('bot','action','STOP')).length !== 0 ) {
+        playMove('bot', 'putCard', gGameState.players[1].hand[resStop[0]].id);
+
+    }
+    // 4.5. במידה ולשחקן הממוחשב יש קלף פלוס (+) שצבעו זהה לקלף העליון בערימה המרכזית – יניח קלף זה בערימה המרכזית
+    //  TODO: here we should add the PLUS Card check
+
+
+    // 4.6. במידה ולשחקן הממוחשב יש קלף סופר טאקי– יניח קלף זה בערימה המרכזית ולאחר מכן את כל הקלפים בצבע הטאקי בצורה כלשהי
+    //  TODO: here we should add the SUPER TAKI Card check
+
+
+    // 4.7. במידה ולשחקן הממוחשב יש קלף טאקי (+) שצבעו זהה לקלף העליון בערימה המרכזית – יניח קלף זה בערימה המרכזית
+    // ו לאחר מכן את כל הקלפים בצבע הטאקי בצורה כלשהי
+    if ( (resTaki = findInHand('bot','action','TAKI')).length !== 0 ) {
+        // מחפש עם קיים טאקי באותו הצבע של הקלף המוביל. אם כן, המשתנה resTakiSameColorIndex
+        // מקבל את ערך האינדקס שלו ביד של השחקן אחרת למשתנה ערך UNDEFINED
+        resTaki.forEach(function (resTakiItem) {
+            if (resTakiSameColorIndex === undefined) {
+                resTakiSameColorIndex  = resColor.find(resTakiItem);
+            } });
+        // במקרה שמצאנו TAKI באותו צבע, אנחנו מניחים אותו
+        if (resTakiSameColorIndex !== undefined) {
+            playMove('bot', 'putCard', gGameState.players[1].hand[resTakiSameColorIndex].id);
+        }
+        
+    }
+
+
+    }
+
+    if ((lCard.color number === 2
+) &&
+    (player.hand.find(card.number))
+
+}
+
+
+
+
+// taking 2 cards from deck
+function take2Cards(playerName) {
+    playMove('deck','getCard');
+    playMove('deck','getCard');
+    decrease2PlusInvoked(2);
+}
+// subtract twoPlusInvoked with number
+function decrease2PlusInvoked(number){
+    var i = number;
+    while ( i > 0) {
+        gGameState.twoPlusInvoked--;
+        i--;
+    }
+}
+
+
+/*
+function outer() {
+    var funs = [];
+    for (var k=0 ; k<3 ; k++)   {
+        funs[k] = (function inner(x) {
+
+            return function(){alert(x)}})(k);
+    }
+    return funs;
+}
+
+var example = outer();
+
+console.log(example[0]());
+console.log(example[1]());
+console.log(example[2]());
+
+(function b() {
+    console.log('called b!');
+})();
+
+b();
+console.log(a);
+
+*/
+
+//**************************************
+
+/*
+// needed functions
+function isTakiInvoked() {
+
+}
+function twoPlusActiveCards()
+
+// BOT engagement rules :
+{
+    if (leadingCard === isActive2Plus) {
+        if (has2Plus()) {
+            put2PlusFromHand();
+        } else {
+            drawFromDeck();
+        }
+    }
+    if ( ( numOf2Plus.length !==0 ) && twoPlusFounded.color ===
+
+
+
+
+
+*/
