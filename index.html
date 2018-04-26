@@ -6,13 +6,13 @@
     <link rel="stylesheet" type="text/css" href="taki.css" />
     <link rel="stylesheet" type="text/css" href="card.css" />
 </head>
-<body onload="initGame(); startTime();">        <!-- TODO: delete "onload=initGame()" -->
+<body onload="initGame()">        <!-- TODO: delete "onload=initGame()" -->
 <h1 id="header"> TAKI </h1>
 
 <div class="main-menu">
     <button class="startGame" onclick=initGame()>
-            Start Game!
-        </button>
+        Start Game!
+    </button>
 </div>
 
 <div class="game-arena">
@@ -23,14 +23,14 @@
             <div class="turnNumber">Turn<br>No' :<span id="turnNumber"></span></div>
             <div class="gameTime">Game<br>Time : <span id="gameTime"></span></div>
             <div class="turnTime">Turn<br>Time: <span id="turnTime"></span></div>
-            <div class="currentPlayer">Playing<br>Now   : <span id="currentPlayer"></span></div>
+            <div class="currentPlayer">Playing<br>Now : <span id="currentPlayer"></span></div>
             <button type="button" name="endTurn" onclick="endTurn();">End Turn</button>
             <button type="button" name="abortGame" onclick="abortGame();">Abort Game</button>
             <div class="day&Time">Day&Time : <br> <span id="day&Time"></span>
-<!--
-                <script> document.write(new Date().toLocaleTimeString());
-                document.write(new Date().toLocaleDateString()); </script>
--->
+                <!--
+                                <script> document.write(new Date().toLocaleTimeString());
+                                document.write(new Date().toLocaleDateString()); </script>
+                -->
             </div>
 
         </div>
@@ -79,8 +79,11 @@
     <!--</div>-->
 
 </div>
+<script src="state.js"></script>
 <script src="utils.js"></script>
 <script src="enums.js"></script>
+<script src="objects/Card.js"></script>
+<script src="objects/Player.js"></script>
 <script src="main.js"></script>
 </body>
 </html>
