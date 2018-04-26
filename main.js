@@ -946,16 +946,7 @@ function botMind() {
         if (resTakiSameColorIndex !== undefined) {
             playMove('bot', 'putCard', gGameState.players[1].hand[resTakiSameColorIndex].id);
         }
-        
     }
-
-
-    }
-
-    if ((lCard.color number === 2
-) &&
-    (player.hand.find(card.number))
-
 }
 
 
