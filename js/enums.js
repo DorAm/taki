@@ -11,7 +11,7 @@ var CardActionEnum = {
     Taki:        'TAKI',
     Stop:        'STOP',
     ChangeColor: 'CC',
-    twoPlus:     'TWO_PLUS'
+    // twoPlus:     'TWO_PLUS'
 };
 
 // enum Card numbers
