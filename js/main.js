@@ -5,7 +5,6 @@ function initGame() {
     hideElement('.main-menu');
     showElement('.game-arena');
 
-    // Players:             // TODO: in near future we would register our player info here.
     createPlayers();
 
     startGame();
@@ -133,6 +132,12 @@ function createPlayers() {
     GameState.players = players;
 }
 
+
+
+
+
+
+
 function createDeck() {
     var deck = [];
     var cardId = 1;
@@ -195,143 +200,13 @@ function restockDeck() {
     shuffleDeck(true);
 }
 
-function createCardElement(owner , currentCard) {
-
-    var cardContainer = document.createElement('div');
-    cardContainer.classList.add('cardContainer');
-    cardContainer.setAttribute('id', 'game'+currentCard.gameOwner+'card'+currentCard.id);
-
-    var card = document.createElement('div');
-    card.classList.add('card', 'shadow', 'rounded');
-//  cardOutline.setAttribute('onclick',"activatingCard(currentCard)");
-//  card.setAttribute('ondblclick','dblclickfunction()');
-
-    var frontCard = document.createElement(('div'));
-    frontCard.classList.add('frontCard','shadow','rounded');
-
-
-    currentCard.color ? frontCard.style.color = currentCard.color : frontCard.style.color = 'BLACK';
-    var backCard = document.createElement(('div'));
-    backCard.classList.add('backCard','shadow','rounded');
-
-    cardContainer.appendChild(card);
-    card.appendChild(frontCard);
-    card.appendChild(backCard);
-
-    var cardTop = document.createElement('div');
-    cardTop.classList.add('cardTop');
-    var cardCenter = document.createElement('div');
-    cardCenter.classList.add('cardCenter');
-    var cardBottom = document.createElement('div');
-    cardBottom.classList.add('cardBottom');
-    frontCard.appendChild(cardTop);
-    frontCard.appendChild(cardCenter);
-    frontCard.appendChild(cardBottom);
-
-    for (var i = 1; i <= 2; i++) {
-        var icon = document.createElement('div');
-        var text = document.createTextNode(currentCard.name);
-        /*       icon.style.color = card.color;*/
-    //    currentCard.color ? icon.style.color = currentCard.color : icon.style.color = 'BLACK';
-        icon.appendChild(text);
-        cardTop.appendChild(icon);
-    }
-    var icon = document.createElement('div');
-    var text = document.createTextNode(currentCard.name);
-    var icon = document.createElement('div');
-    /*        icon.style.color = currentCard.color;*/
-    //currentCard.color ? icon.style.color = currentCard.color : icon.style.color = 'BLACK';
-    icon.appendChild(text);
-
-    cardCenter.appendChild(icon);
-
-    for (var i = 1; i <= 2; i++) {
-        icon.style.color = card.color;
-        var icon = document.createElement('div');
-        var text = document.createTextNode(currentCard.name);
-        /*        icon.style.color = currentCard.color;*/
-        //currentCard.color ? icon.style.color = currentCard.color : icon.style.color = 'BLACK';
-        icon.appendChild(text);
-        cardBottom.appendChild(icon);
-    }
-
-    var cardCover = document.createElement('div');
-    cardCover.classList.add('cardCover');
-    backCard.appendChild(cardCover);
-
-    var img = document.createElement('img');
-    img.setAttribute('src', 'assets/TAKI.jpg');
-    img.setAttribute('alt', 'taki cover');
-    // img.setAttribute('style', 'width:100%;');
-    cardCover.appendChild(img);
-
-    if ( !currentCard.isHidden ) {
-        //backCard.setAttribute('style','top: 0%');
-        backCard.style.top='0%';
-        //frontCard.setAttribute('style', 'top: -100%');
-        frontCard.style.top= '-100%';
-
-        backCard.parentNode.insertBefore(backCard, frontCard);
-/*
-        //the opposite:
-        backCard.setAttribute('style','top: -100%');
-        frontCard.setAttribute('style', 'top: 0%');
-        backCard.parentNode.insertBefore(backCard, frontCard);
-*/
-    }
-
-    var ownerCardsArea;
-    switch ( owner ) {
-        case 'deck': {
-            ownerCardsArea = document.querySelector('.deckCardsArea');
-            if ( GameState.board.deck[GameState.board.deck.length-1] === currentCard ) {
-                // cardContainer.removeAttribute('ondblclick'); TODO:delete line
-                //cardContainer.setAttribute('ondblclick', 'moveCard("deck", "human",' + currentCard.id + ')');
-
-                cardContainer.setAttribute('ondblclick', 'playMove("human", "getCard",' + currentCard.id + ')');
-
-            }
-            break;
-        }
-        case 'pile': {
-            ownerCardsArea = document.querySelector('.pileCardsArea');
-            break;
-        }
-        case 'player': {
-            ownerCardsArea = document.querySelector('.playerCardsArea');
-            break;
-        }
-        case 'bot': {
-            ownerCardsArea = document.querySelector('.botCardsArea');
-            break;
-        }
-        default: {
-            break;
-        }
-    }
-    ownerCardsArea.appendChild(cardContainer);
-}
 
 function showCards() {
-/*
-    //display human player cards on screen
-    GameState.players[0].hand.forEach(function (card) {
-        createCardElement('player', card);
-    });
 
-    //display Bot player cards on screen
-    GameState.players[1].hand.forEach(function (card) {
-        createCardElement('bot', card);
-    });
-
-    //display pile cards on screen
-    GameState.board.pile.forEach(function (card) {
-        createCardElement('pile', card);
-    });
-*/
     //display deck cards on screen
     GameState.board.deck.forEach(function (card) {
-        createCardElement('deck', card);
+        var ownerCardsArea = document.querySelector('.deckCardsArea');
+        ownerCardsArea.appendChild(createCardElement(card));
     });
 
 }
@@ -964,3 +839,151 @@ function twoPlusActiveCards()
 
 
 */
+
+/*
+
+function createDrawPile() {
+    var cardId = 0;
+    createNumberCards(cardId);
+    createActionCards(cardId);
+}
+
+function createNumberCards(cardId) {
+    for (var number in CardNumberEnum) {
+        if (number === 2) {
+            continue;
+        }
+        for (var i = 1; i <= 2; i++) {
+            for (var color in ColorEnum) {
+                var newCard = new Card(cardId++, ColorEnum[color], CardNumberEnum[number]);
+                GameState.drawPile.push(newCard);
+            }
+        }
+    }
+}
+
+function createActionCards(cardId) {
+    for (var action in CardActionEnum) {
+        if (CardActionEnum[action] !== CardActionEnum.ChangeColor) {
+            for (i = 1; i <= 2; i++) {
+                for (color in ColorEnum) {
+                    var newCard = new Card(cardId++, ColorEnum[color], null, CardActionEnum[action]);
+                    GameState.drawPile.push(newCard);
+                }
+            }
+        } else {
+            for (j = 1; j <= 4; j++) {
+                var newCard = new Card(cardId++, null, null, CardActionEnum.ChangeColor);
+                GameState.drawPile.push(newCard);
+            }
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+*/
+
+
+
+
+
+function createCardElement(currentCard) {
+
+    var cardContainer = document.createElement('div');
+    cardContainer.classList.add('cardContainer');
+    cardContainer.setAttribute('id', 'game'+currentCard.gameOwner+'card'+currentCard.id);
+
+    var card = document.createElement('div');
+    card.classList.add('card', 'shadow', 'rounded');
+
+    var frontCard = document.createElement(('div'));
+    frontCard.classList.add('frontCard','shadow','rounded');
+
+
+    currentCard.color ? frontCard.style.color = currentCard.color : frontCard.style.color = 'BLACK';
+    var backCard = document.createElement(('div'));
+    backCard.classList.add('backCard','shadow','rounded');
+
+    cardContainer.appendChild(card);
+    card.appendChild(frontCard);
+    card.appendChild(backCard);
+
+    var cardTop = document.createElement('div');
+    cardTop.classList.add('cardTop');
+    var cardCenter = document.createElement('div');
+    cardCenter.classList.add('cardCenter');
+    var cardBottom = document.createElement('div');
+    cardBottom.classList.add('cardBottom');
+    frontCard.appendChild(cardTop);
+    frontCard.appendChild(cardCenter);
+    frontCard.appendChild(cardBottom);
+
+    for (var i = 1; i <= 2; i++) {
+        var icon = document.createElement('div');
+        var text = document.createTextNode(currentCard.name);
+        /*       icon.style.color = card.color;*/
+        //    currentCard.color ? icon.style.color = currentCard.color : icon.style.color = 'BLACK';
+        icon.appendChild(text);
+        cardTop.appendChild(icon);
+    }
+    var icon = document.createElement('div');
+    var text = document.createTextNode(currentCard.name);
+    var icon = document.createElement('div');
+
+    icon.appendChild(text);
+
+    cardCenter.appendChild(icon);
+
+    for (var i = 1; i <= 2; i++) {
+        icon.style.color = card.color;
+        var icon = document.createElement('div');
+        var text = document.createTextNode(currentCard.name);
+        /*        icon.style.color = currentCard.color;*/
+        //currentCard.color ? icon.style.color = currentCard.color : icon.style.color = 'BLACK';
+        icon.appendChild(text);
+        cardBottom.appendChild(icon);
+    }
+
+    var cardCover = document.createElement('div');
+    cardCover.classList.add('cardCover');
+    backCard.appendChild(cardCover);
+
+    var img = document.createElement('img');
+    img.setAttribute('src', 'assets/TAKI.jpg');
+    img.setAttribute('alt', 'taki cover');
+    // img.setAttribute('style', 'width:100%;');
+    cardCover.appendChild(img);
+
+    if ( !currentCard.isHidden ) {
+        //backCard.setAttribute('style','top: 0%');
+        backCard.style.top='0%';
+        //frontCard.setAttribute('style', 'top: -100%');
+        frontCard.style.top= '-100%';
+
+        backCard.parentNode.insertBefore(backCard, frontCard);
+        /*
+                //the opposite:
+                backCard.setAttribute('style','top: -100%');
+                frontCard.setAttribute('style', 'top: 0%');
+                backCard.parentNode.insertBefore(backCard, frontCard);
+        */
+    }
+    if ( GameState.board.deck[GameState.board.deck.length-1] === currentCard ) {
+        // cardContainer.removeAttribute('ondblclick'); TODO:delete line
+        //cardContainer.setAttribute('ondblclick', 'moveCard("deck", "human",' + currentCard.id + ')');
+        cardContainer.setAttribute('ondblclick', 'playMove("human", "getCard",' + currentCard.id + ')');
+
+    }
+    return cardContainer;
+}
