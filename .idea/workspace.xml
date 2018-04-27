@@ -1,71 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="d81a5bbc-3cad-47d9-a956-ed980116beb0" name="Default" comment="">
-      <change beforePath="" afterPath="$PROJECT_DIR$/.idea/codeStyles/codeStyleConfig.xml" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/js/Objects/player.js" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/js/utils/DOM-utils.js" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/TAKI.jpg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/card.css" afterPath="$PROJECT_DIR$/style/card.css" />
-      <change beforePath="$PROJECT_DIR$/enums.js" afterPath="$PROJECT_DIR$/js/enums.js" />
-      <change beforePath="$PROJECT_DIR$/index.html" afterPath="$PROJECT_DIR$/index.html" />
-      <change beforePath="$PROJECT_DIR$/main.js" afterPath="$PROJECT_DIR$/js/main.js" />
-      <change beforePath="$PROJECT_DIR$/player.js" afterPath="$PROJECT_DIR$/js/State.js" />
-      <change beforePath="$PROJECT_DIR$/taki cards/1-blue.jpg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/taki cards/1-green.jpg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/taki cards/1-red.jpg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/taki cards/1-yellow.jpg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/taki cards/2-blue.jpg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/taki cards/2-green.jpg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/taki cards/2-red.jpg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/taki cards/2-yellow.jpg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/taki cards/3-blue.jpg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/taki cards/3-green.jpg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/taki cards/3-red.jpg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/taki cards/3-yellow.jpg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/taki cards/4-blue.jpg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/taki cards/4-green.jpg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/taki cards/4-red.jpg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/taki cards/4-yellow.jpg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/taki cards/5-blue.jpg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/taki cards/5-green.jpg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/taki cards/5-red.jpg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/taki cards/5-yellow.jpg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/taki cards/6-blue.jpg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/taki cards/6-green.jpg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/taki cards/6-red.jpg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/taki cards/6-yellow.jpg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/taki cards/7-blue.jpg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/taki cards/7-green.jpg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/taki cards/7-red.jpg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/taki cards/7-yellow.jpg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/taki cards/8-blue.jpg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/taki cards/8-green.jpg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/taki cards/8-red.jpg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/taki cards/8-yellow.jpg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/taki cards/9-blue.jpg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/taki cards/9-green.jpg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/taki cards/9-red.jpg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/taki cards/9-yellow.jpg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/taki cards/back.jpg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/taki cards/changeColor-noColor.jpg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/taki cards/plus-blue.jpg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/taki cards/plus-green.jpg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/taki cards/plus-red.jpg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/taki cards/plus-yellow.jpg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/taki cards/stop-blue.jpg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/taki cards/stop-green.jpg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/taki cards/stop-red.jpg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/taki cards/stop-yellow.jpg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/taki cards/superTaki-noColor.jpg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/taki cards/taki-blue.jpg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/taki cards/taki-green.jpg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/taki cards/taki-red.jpg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/taki cards/taki-yellow.jpg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/taki.css" afterPath="$PROJECT_DIR$/style/taki.css" />
-      <change beforePath="$PROJECT_DIR$/taki.rar" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/utils.js" afterPath="$PROJECT_DIR$/js/utils/utils.js" />
+    <list default="true" id="d81a5bbc-3cad-47d9-a956-ed980116beb0" name="Default" comment="step 1 of rebuilding">
+      <change beforePath="$PROJECT_DIR$/js/main.js" afterPath="$PROJECT_DIR$/js/main.js" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -102,8 +39,8 @@
       <file leaf-file-name="Card.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/js/Objects/Card.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+            <state relative-caret-position="160">
+              <caret line="8" column="22" lean-forward="false" selection-start-line="7" selection-start-column="21" selection-end-line="8" selection-end-column="22" />
               <folding />
             </state>
           </provider>
@@ -122,8 +59,8 @@
       <file leaf-file-name="main.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/js/main.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="140">
-              <caret line="8" column="0" lean-forward="false" selection-start-line="8" selection-start-column="0" selection-end-line="8" selection-end-column="0" />
+            <state relative-caret-position="60">
+              <caret line="901" column="0" lean-forward="true" selection-start-line="901" selection-start-column="0" selection-end-line="901" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -170,8 +107,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>visi</find>
-      <find>style</find>
       <find>display</find>
       <find>main</find>
       <find>top</find>
@@ -200,6 +135,8 @@
       <find>gGames</find>
       <find>gGame</find>
       <find>displayGameStatus</find>
+      <find>createcard</find>
+      <find>createCardElement</find>
     </findStrings>
     <replaceStrings>
       <replace>'</replace>
@@ -232,6 +169,7 @@
         <option value="$PROJECT_DIR$/js/State.js" />
         <option value="$PROJECT_DIR$/js/utils/utils.js" />
         <option value="$PROJECT_DIR$/index.html" />
+        <option value="$PROJECT_DIR$/js/Objects/Card.js" />
         <option value="$PROJECT_DIR$/js/main.js" />
       </list>
     </option>
@@ -360,10 +298,18 @@
       <workItem from="1523136898636" duration="58000" />
       <workItem from="1524461551579" duration="183000" />
     </task>
+    <task id="LOCAL-00001" summary="step 1 of rebuilding">
+      <created>1524851517506</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1524851517506</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="36381000" />
+    <option name="totallyTimeSpent" value="38627000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -433,6 +379,10 @@
   </component>
   <component name="VcsContentAnnotationSettings">
     <option name="myLimit" value="2678400000" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="step 1 of rebuilding" />
+    <option name="LAST_COMMIT_MESSAGE" value="step 1 of rebuilding" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -737,14 +687,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/js/main.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="140">
-          <caret line="8" column="0" lean-forward="false" selection-start-line="8" selection-start-column="0" selection-end-line="8" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/js/utils/DOM-utils.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="220">
@@ -769,10 +711,18 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/js/main.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="60">
+          <caret line="901" column="0" lean-forward="true" selection-start-line="901" selection-start-column="0" selection-end-line="901" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/js/Objects/Card.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        <state relative-caret-position="160">
+          <caret line="8" column="22" lean-forward="false" selection-start-line="7" selection-start-column="21" selection-end-line="8" selection-end-column="22" />
           <folding />
         </state>
       </provider>
